@@ -6,6 +6,8 @@ Boolean Academy Final Project - 2024
 
 Project Board: https://github.com/users/ssuihko/projects/1
 
+Documentation Google Doc: https://docs.google.com/document/d/1vTa7eyL9yXGx4kR44jwI93PREfyZFpwPiEOJM7W6_3M/edit?usp=sharing
+
 This repository will contain both the frontend and the backend in their respective folders.
 
 ### CORE
@@ -55,11 +57,11 @@ This repository will contain both the frontend and the backend in their respecti
 
 - backend: friendslist: many-to-many relationship
 
-##### frontend calls:
+##### frontend calls these backend endpoints:
 
-- **GET all users: localhost:4300/users** &rarr; returns Array of User object, status 200 OK
-- **GET a user: localhost:4300/users/:userId** &rarr; returns the User, or 404 not found
-- **POST: localhost:4300/users**
+- **GET all users: db.elephantsql.com/users** &rarr; returns Array of User object, status 200 OK
+- **GET a user: db.elephantsql.com/users/{user_id}** &rarr; returns the User, or 404 not found
+- **POST: db.elephantsql.com/users**
   payload:
 
 ```C#
@@ -85,7 +87,7 @@ Created User Payload:
 }
 ```
 
-- **PUT: localhost:4300/users/:userId**
+- **PUT: db.elephantsql.com/users/{user_id}**
   payload (missing fields will be replaced with the old values)
 
 ```C#
@@ -101,7 +103,7 @@ returns 404 not found when the user was not found by id
 returns 400 bad request when an updated field is not in acceptable format (validation error)
 returns 200 OK with the correct payload
 
-- **DELETE: localhost:4300/users/:userId**
+- **DELETE: db.elephantsql.com/users/{user_id}**
   returns 200 OK when id was found and deletion was succesful
   returns 404 when user with the id was not found
 
@@ -111,9 +113,9 @@ returns 200 OK with the correct payload
 
 ##### frontend calls:
 
-- **GET all users: localhost:4300/posts** &rarr; returns Array of Post objects, status 200 OK
-- **GET a user: localhost:4300/posts/:postId** &rarr; returns the Post, or 404 not found
-- **POST: localhost:4300/posts**
+- **GET all users: db.elephantsql.com/posts** &rarr; returns Array of Post objects, status 200 OK
+- **GET a user: db.elephantsql.com/posts/{post_id}** &rarr; returns the Post, or 404 not found
+- **POST: db.elephantsql.com/posts**
   payload:
 
 ```C#
@@ -138,7 +140,7 @@ Created Post Payload:
 }
 ```
 
-- **PUT: localhost:4300/posts/:postId**
+- **PUT: db.elephantsql.com/posts/{post_id}**
   payload (missing fields will be replaced with the old values)
 
 ```C#
@@ -154,7 +156,7 @@ returns 404 not found when the post was not found by id
 returns 400 bad request when an updated field is not in acceptable format (validation error)
 returns 200 OK with the correct payload
 
-- **DELETE: localhost:4300/posts/:postId**
+- **DELETE: db.elephantsql.com/posts/{post_id}**
   returns 200 OK when post with the id was found and deletion was succesful
   returns 404 when post with the id was not found
 
@@ -162,9 +164,9 @@ returns 200 OK with the correct payload
 
 ##### frontend calls:
 
-- **GET all comments: localhost/4300/posts/:postId/comments/** &rarr; returns Array of Comment objects, status 200 OK
-- **GET a comment: localhost/4300/posts/:postId/comments/:commentId** &rarr; returns the Comment, or 404 not found
-- **POST: localhost/4300/posts/:postId/comments/**
+- **GET all comments: db.elephantsql.com/posts/{post_id}/comments** &rarr; returns Array of Comment objects, status 200 OK
+- **GET a comment: db.elephantsql.com/posts/{post_id}/comments/{comment_id}** &rarr; returns the Comment, or 404 not found
+- **POST: db.elephantsql.com/posts/{post_id}/comments**
   payload:
 
 ```C#
@@ -188,7 +190,7 @@ Created Comment Payload:
 }
 ```
 
-- **PUT: localhost:4300/posts/:postId/comments/:commentId**
+- **PUT: db.elephantsql.com/posts/{post_id}/comments/{comment_id}**
   payload (missing fields will be replaced with the old values)
 
 ```C#
@@ -203,10 +205,10 @@ returns 404 not found when the comment was not found by id
 returns 400 bad request when an updated field is not in acceptable format (validation error)
 returns 200 OK with the correct payload
 
-- **DELETE: localhost:4300/posts/:postId/comments** &rarr; deletes all comments of a post
+- **DELETE: db.elephantsql.com/posts/{post_id}/comments** &rarr; deletes all comments of a post
   returns 200 OK when post with the post with the id was found and deletion was succesful
   returns 404 when post with the id was not found
 
-- **DELETE: localhost:4300/posts/:postId/comments/:commentId** &rarr; deletes one comment of a post
+- **DELETE: db.elephantsql.com/posts/{post_id}/comments/{comment_id}** &rarr; deletes one comment of a post
   returns 200 OK when comment with the id was found and deletion was succesful
   returns 404 when post / comment with the id was not found
