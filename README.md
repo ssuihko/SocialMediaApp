@@ -6,6 +6,8 @@ Boolean Academy Final Project - 2024
 
 Project Board: https://github.com/users/ssuihko/projects/1
 
+This repository will contain both the frontend and the backend in their respective folders.
+
 ### CORE
 
 - User should be able to create post,
