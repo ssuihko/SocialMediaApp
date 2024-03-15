@@ -1,5 +1,9 @@
 # SocialMediaApp
 
+Social media forum application.
+
+Boolean Academy Final Project - 2024
+
 ### CORE
 
 - User should be able to create post,
@@ -18,6 +22,12 @@
 - User should be able to see a list of his friends,
 - Authentication/login
 - CSS
+
+### TECHNOLOGIES
+
+- FE: React/Javascript
+- BE: C# .NET
+- DB: ElephantSQL
 
 ### STRUCTURE
 
