@@ -44,6 +44,7 @@ This repository will contain both the frontend and the backend in their respecti
       - CommentForm
 - Profile
   - ProfileForm
+- Login
 - Sidebar
 - Header
   - Filter
