@@ -4,6 +4,8 @@ Social media forum application.
 
 Boolean Academy Final Project - 2024
 
+Project Board: https://github.com/users/ssuihko/projects/1
+
 ### CORE
 
 - User should be able to create post,
