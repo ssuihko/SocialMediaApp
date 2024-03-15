@@ -36,6 +36,7 @@
 
 ### API
 
+```C#
 User
   {
     id: integer,
@@ -44,6 +45,7 @@ User
     firstName: srting,
     lastName: string
   }
+```
 
 - backend: friendslist: many-to-many relationship
 
@@ -55,6 +57,7 @@ frontend calls:
 - PUT: localhost/4300/user/id
 - DELETE: localhost/4300/user/id
 
+```C#
 Post
 {
 id: integer,
@@ -63,6 +66,7 @@ title: string,
 text: string,
 likes: integer
 }
+```
 
 - backend: commentslist: one-to-many
 
@@ -74,6 +78,7 @@ frontend calls:
 - PUT: localhost/4300/post/id
 - DELETE: localhost/4300/post/id
 
+```C#
 Comment
   {
     id: integer,
@@ -81,6 +86,7 @@ Comment
     text: string,
     likes: integer
   }
+```
 
 frontend calls:
 
