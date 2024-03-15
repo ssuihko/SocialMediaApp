@@ -37,13 +37,13 @@
 ### API
 
 User
-{
-id: integer,
-username: string,
-email: string,
-firstName: srting,
-lastName: string,
-}
+  {
+    id: integer,
+    username: string,
+    email: string,
+    firstName: srting,
+    lastName: string
+  }
 
 - backend: friendslist: many-to-many relationship
 
@@ -61,7 +61,7 @@ id: integer,
 userId: string,
 title: string,
 text: string,
-likes: integer,
+likes: integer
 }
 
 - backend: commentslist: one-to-many
@@ -75,12 +75,12 @@ frontend calls:
 - DELETE: localhost/4300/post/id
 
 Comment
-{
-id: integer,
-postId: string,
-text: string,
-likes: integer,
-}
+  {
+    id: integer,
+    postId: string,
+    text: string,
+    likes: integer
+  }
 
 frontend calls:
 
