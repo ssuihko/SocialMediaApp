@@ -36,10 +36,10 @@ Project Board: https://github.com/users/ssuihko/projects/1
 - Homepage
   - PostList
   - Post
+    - PostForm
     - CommentList
     - Comment
       - CommentForm
-    - PostForm
 - Profile
   - ProfileForm
 - Sidebar
@@ -48,63 +48,162 @@ Project Board: https://github.com/users/ssuihko/projects/1
 
 ### API
 
+#### USER
+
+- backend: friendslist: many-to-many relationship
+
+##### frontend calls:
+
+- **GET all users: localhost:4300/users** &rarr; returns Array of User object, status 200 OK
+- **GET a user: localhost:4300/users/:userId** &rarr; returns the User, or 404 not found
+- **POST: localhost:4300/users**
+  payload:
+
 ```C#
-User
   {
-    id: integer,
     username: string,
     email: string,
-    firstName: srting,
+    firstName: string,
     lastName: string
   }
 ```
 
-- backend: friendslist: many-to-many relationship
-
-frontend calls:
-
-- GET all users: localhost/4300/user
-- GET a user: localhost/4300/user/id
-- POST: localhost/4300/user
-- PUT: localhost/4300/user/id
-- DELETE: localhost/4300/user/id
+returns: 400 bad request when a field is missing or a wrong field type is provided
+returns: 201 created when all the fields were provided correctly
+Created User Payload:
 
 ```C#
-Post
 {
-id: integer,
-userId: string,
-title: string,
-text: string,
-likes: integer
+  id: integer,
+  username: string,
+  email: string,
+  firstName: string,
+  lastName: string
 }
 ```
 
-- backend: commentslist: one-to-many
-
-frontend calls:
-
-- GET all: localhost/4300/post
-- GET one: localhost/4300/post/id
-- POST: localhost/4300/post
-- PUT: localhost/4300/post/id
-- DELETE: localhost/4300/post/id
+- **PUT: localhost:4300/users/:userId**
+  payload (missing fields will be replaced with the old values)
 
 ```C#
-Comment
   {
+    username: string,
+    email: string,
+    firstName: string,
+    lastName: string
+  }
+```
+
+returns 404 not found when the user was not found by id
+returns 400 bad request when an updated field is not in acceptable format (validation error)
+returns 200 OK with the correct payload
+
+- **DELETE: localhost:4300/users/:userId**
+  returns 200 OK when id was found and deletion was succesful
+  returns 404 when user with the id was not found
+
+#### POST
+
+- backend: commentslist: one-to-many
+
+##### frontend calls:
+
+- **GET all users: localhost:4300/posts** &rarr; returns Array of Post objects, status 200 OK
+- **GET a user: localhost:4300/posts/:postId** &rarr; returns the Post, or 404 not found
+- **POST: localhost:4300/posts**
+  payload:
+
+```C#
+  {
+    userId: string,
+    title: string,
+    text: string,
+  }
+```
+
+returns: 400 bad request when a field is missing or a wrong field type is provided
+returns: 201 created when all the fields were provided correctly
+Created Post Payload:
+
+```C#
+{
     id: integer,
-    postId: string,
+    userId: string,
+    title: string,
+    text: string,
+    likes: integer (0)
+}
+```
+
+- **PUT: localhost:4300/posts/:postId**
+  payload (missing fields will be replaced with the old values)
+
+```C#
+  {
+    userId: string,
+    title: string,
     text: string,
     likes: integer
   }
 ```
 
-frontend calls:
+returns 404 not found when the post was not found by id
+returns 400 bad request when an updated field is not in acceptable format (validation error)
+returns 200 OK with the correct payload
 
-- GET all: localhost/4300/post/id/comment
-- GET one: localhost/4300/post/id/comment/id
-- POST: localhost/4300/post/id/comment
-- PUT: localhost/4300/post/id/comment/id
-- DELETE: localhost/4300/post/id/comment/id
-- DELETE all: localhost/4300/post/id/comment
+- **DELETE: localhost:4300/posts/:postId**
+  returns 200 OK when post with the id was found and deletion was succesful
+  returns 404 when post with the id was not found
+
+#### COMMENT
+
+##### frontend calls:
+
+- **GET all comments: localhost/4300/posts/:postId/comments/** &rarr; returns Array of Comment objects, status 200 OK
+- **GET a comment: localhost/4300/posts/:postId/comments/:commentId** &rarr; returns the Comment, or 404 not found
+- **POST: localhost/4300/posts/:postId/comments/**
+  payload:
+
+```C#
+  {
+    postId: integer,
+    userId: integer,
+    text: string,
+  }
+```
+
+returns: 400 bad request when a field is missing or a wrong field type is provided
+returns: 201 created when all the fields were provided correctly
+Created Comment Payload:
+
+```C#
+{
+    postId: integer,
+    userId: integer,
+    text: string,
+    likes: integer
+}
+```
+
+- **PUT: localhost:4300/posts/:postId/comments/:commentId**
+  payload (missing fields will be replaced with the old values)
+
+```C#
+  {
+    postId: integer,
+    userId: integer,
+    text: string,
+  }
+```
+
+returns 404 not found when the comment was not found by id
+returns 400 bad request when an updated field is not in acceptable format (validation error)
+returns 200 OK with the correct payload
+
+- **DELETE: localhost:4300/posts/:postId/comments** &rarr; deletes all comments of a post
+  returns 200 OK when post with the post with the id was found and deletion was succesful
+  returns 404 when post with the id was not found
+
+- **DELETE: localhost:4300/posts/:postId/comments/:commentId** &rarr; deletes one comment of a post
+  returns 200 OK when comment with the id was found and deletion was succesful
+  returns 404 when post / comment with the id was not found
