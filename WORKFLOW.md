@@ -19,8 +19,10 @@ In the projects board
 
 4. You get a set of commands after clicking the 'create branch' button which look like this:
 
-> git fetch origin
-> git checkout 'branch-name'
+```console
+git fetch origin
+git checkout 'branch-name'
+```
 
 Inside you local development terminal, make sure you are in the 'main' branch.
 You can check this by runnin the command 'git branch -a'.
@@ -30,9 +32,11 @@ By running 'git branch -a' you will now see that you're inside of a new branch.
 
 5. Make your new changes inside of this branch. Add, commit and push to this branch:
 
-> git add .
-> git commit -m "my comment"
-> git push -u origin 'my-branch-name'
+```console
+git add .
+git commit -m "my comment"
+git push -u origin 'my-branch-name'
+```
 
 6. Navigate to your pr in the repositry. In case your updates are recent, you should see a similar message:
 
@@ -44,12 +48,16 @@ Proceed to create a pull-request. Assign the current team leader to review the p
 
 In terminal in the main branch:
 
-> git fetch
-> git pull
+```console
+git fetch
+git pull
+```
 
 Navigate to the branch where your changes are:
 
-> git checkout -b 'your-branch-name'
-> git merge main
+```console
+git checkout -b 'your-branch-name'
+git merge main
+```
 
 You will see a merge conflict is created. Fix the merge conflict in your code editor, and add + commit + push to the branch. Now you should be able to merge.
