@@ -1,4 +1,4 @@
-### How to contribute code
+## How to contribute code
 
 Taken from this recording:
 https://us02web.zoom.us/rec/share/4fttR9QLqzxY18ptg_8kZv7nBGXFD-5vMpo80mvIuMraMlGpV0FsUagVxoltw1Hp.3c61x-tK3H9rweEn
@@ -38,7 +38,7 @@ git commit -m "my comment"
 git push -u origin 'my-branch-name'
 ```
 
-6. Navigate to your pr in the repositry. In case your updates are recent, you should see a similar message:
+6. Navigate to your branch in the repositry. In case your updates are recent, you should see a similar message:
 
 ![image info](./img/pr_message.png)
 
