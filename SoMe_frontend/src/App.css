@@ -1,5 +1,3 @@
-/* App.css */
-
 body,
 html {
   height: 100%;
@@ -31,7 +29,10 @@ html {
   flex: 1;
   padding: 1rem;
   display: flex;
-  flex-direction: column; /* Ensure posts and form stack vertically */
+  flex-direction: column;
+  background-color: #f0f0f0; /* Set background color */
+  min-height: 100vh; /* Ensure it covers the entire viewport height */
+  overflow-y: auto; /* Add vertical scrolling */
 }
 
 .post-form {
@@ -42,11 +43,20 @@ html {
   width: calc(100% - 240px); /* Calculate the width to span from sidebar */
 }
 
+.post-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+  margin-bottom: 1rem; /* Add margin between posts */
+}
+
 .post {
   background-color: white;
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1rem; /* Add margin between posts */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
 }
 
 .post:last-child {
@@ -71,7 +81,13 @@ html {
   resize: vertical; /* Allow vertical resizing of textarea */
 }
 
-.sidebar button {
+.sidebar {
+  background-color: #f0f0f0;
+  width: 200px;
+  padding: 1rem;
+}
+
+.sidebar-button {
   display: block;
   width: 100%;
   padding: 0.5rem;
@@ -79,13 +95,23 @@ html {
   border: none;
   background-color: #007bff; /* Standard blue color for buttons */
   color: white;
-  cursor: pointer;
+  text-align: center; /* Center the text horizontally */
+  text-decoration: none; /* Remove default link underline */
+  border-radius: 4px; /* Add some border radius to make them look like buttons */
 }
 
-.sidebar button:hover {
+.sidebar-button:hover {
   background-color: #0056b3; /* Darker shade of blue on hover */
 }
 
 .sidebar button:first-child {
   margin-top: 0;
+}
+
+.blank-profile-pic {
+  margin-left: auto; /* Align to the right */
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+  border-radius: 50%; /* Make it round */
+  background-color: #ccc; /* Gray color for the blank profile picture */
 }
