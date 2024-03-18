@@ -10,8 +10,10 @@ namespace BackEnd.Models
         public int commentId { get; set; }
         [Column("post_id")]
         public int postId { get; set; }
+        public Post Post { get; set; }
         [Column("user_id")]
         public int userId { get; set; }
+        public User user { get; set; }
         [Column("content")]
         public string content { get; set; }
         [Column("likes")]

@@ -10,6 +10,7 @@ namespace BackEnd.Models
         public int postId { get; set; }
         [Column("user_id")]
         public int userId { get; set; }
+        public User user { get; set; }
         [Column("title")]
         public string title { get; set; }
         [Column("content")]
