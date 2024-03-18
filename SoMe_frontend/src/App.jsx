@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 
 export const AppContext = createContext();
 
@@ -33,10 +34,7 @@ function App() {
     <AppContext.Provider value={{ posts, setPosts }}>
       <Header />
       <div className="container">
-        <div className="sidebar">
-          <button>Home</button>
-          <button>Profile</button>
-        </div>
+        <Sidebar />
         <div className="body">
           <Dashboard />
         </div>
