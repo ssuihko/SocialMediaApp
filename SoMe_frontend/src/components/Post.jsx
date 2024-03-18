@@ -5,7 +5,7 @@ function Post({ post }) {
 }
 
 Post.propTypes = {
-  post: PropTypes.obj,
+  post: PropTypes.object,
 };
 
 export default Post;
