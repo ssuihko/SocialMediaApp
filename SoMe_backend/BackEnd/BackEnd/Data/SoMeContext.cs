@@ -18,9 +18,9 @@ namespace BackEnd.Data
         {
 
             modelBuilder.Entity<User>().HasData(
-                new User { userId = 1, username = "John Doe", firstName = "John", lastName = "Doe",email = "JohnDoe@gmail.com" },
-                new User { userId = 2, username = "Jane Doe", firstName = "Jane", lastName = "Doe", email = "JaneJane@Jane.com" },
-                new User { userId = 3, username = "Bob Jones", firstName = "Bob", lastName = "Jones", email = "BobJones@gmail.com" }
+                new User { userId = 1, username = "John Doe", firstName = "John", lastName = "Doe",email = "JohnDoe@gmail.com", profileImg = "https://www.gravatar.com/avatar/sdfa@fasdf.com?s=120&d=identicon" },
+                new User { userId = 2, username = "Jane Doe", firstName = "Jane", lastName = "Doe", email = "JaneJane@Jane.com", profileImg = "https://www.gravatar.com/avatar/sdfa@fasdf.com?s=120&d=identicon" },
+                new User { userId = 3, username = "Bob Jones", firstName = "Bob", lastName = "Jones", email = "BobJones@gmail.com", profileImg = "https://www.gravatar.com/avatar/sdfa@fasdf.com?s=120&d=identicon" }
             );
 
             modelBuilder.Entity<Post>().HasData(
