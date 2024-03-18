@@ -30,8 +30,32 @@ function App() {
     },
   ]);
 
+  const [comments, setComments] = useState([
+    {
+      id: 1,
+      postId: 1,
+      user: "Bob",
+      content: "Bobs comment",
+      likes: 2,
+    },
+    {
+      id: 2,
+      postId: 2,
+      user: "John",
+      content: "Johns comment",
+      likes: 4,
+    },
+    {
+      id: 3,
+      postId: 3,
+      user: "Jane",
+      content: "Janes comment",
+      likes: 2,
+    },
+  ]);
+
   return (
-    <AppContext.Provider value={{ posts, setPosts }}>
+    <AppContext.Provider value={{ posts, setPosts, comments, setComments }}>
       <Header />
       <div className="container">
         <Sidebar />

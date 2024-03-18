@@ -89,3 +89,7 @@ html {
 .sidebar button:first-child {
   margin-top: 0;
 }
+
+.comment {
+  border-style: solid;
+}
