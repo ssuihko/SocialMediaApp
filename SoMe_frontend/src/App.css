@@ -115,3 +115,6 @@ html {
   border-radius: 50%; /* Make it round */
   background-color: #ccc; /* Gray color for the blank profile picture */
 }
+.comment {
+  border-style: solid;
+}

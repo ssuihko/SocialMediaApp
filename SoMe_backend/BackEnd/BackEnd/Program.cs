@@ -1,9 +1,13 @@
+using BackEnd.Data;
+using BackEnd.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<SoMeContext>();
+builder.Services.AddScoped<IRepository, Repository>();
 
 var app = builder.Build();
 
@@ -16,8 +20,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
-
-
 app.Run();
 
+public partial class Program { }
