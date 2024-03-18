@@ -48,7 +48,7 @@ git push -u origin 'my-branch-name'
 
 ## How to handle PRs
 
-1. checkout main
+1. git checkout main
 2. pull latest changes from main
 3. checkout the branch with your work that needs to be PRed
 4. run git merge main which will pull latest changes from main into your branch
