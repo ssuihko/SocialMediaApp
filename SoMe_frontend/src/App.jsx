@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
@@ -9,7 +9,22 @@ import Profile from "./components/ProfileView";
 
 export const AppContext = createContext();
 
+const API_URL = "https://localhost:7234/";
+
 function App() {
+  const [users, setUsers] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    fetch(API_URL + "users")
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data);
+        setLoggedInUser(data[0]);
+        console.log(data);
+      });
+  }, []);
+
   const [posts, setPosts] = useState([
     {
       id: 1,
@@ -56,7 +71,9 @@ function App() {
   ]);
 
   return (
-    <AppContext.Provider value={{ posts, setPosts, comments, setComments }}>
+    <AppContext.Provider
+      value={{ posts, setPosts, comments, setComments, loggedInUser }}
+    >
       <Router>
         <Header />
         <div className="container">
