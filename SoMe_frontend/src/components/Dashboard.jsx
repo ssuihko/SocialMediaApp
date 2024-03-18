@@ -1,6 +1,7 @@
 // Dashboard.jsx
 import { useContext, useState } from "react";
 import { AppContext } from "../App";
+import PostList from "./PostList";
 
 function Dashboard() {
   const { posts } = useContext(AppContext);
@@ -36,24 +37,11 @@ function Dashboard() {
         />
       </div>
       <div className="posts">
-        {filteredPosts.map((post) => (
-          <div key={post.id} className="post">
-            <h3>{post.title}</h3>
-            <p>{post.content}</p>
-            <p>Author: {post.author}</p>
-            {/* Comment form for each post */}
-            <form className="comment-form">
-              <label htmlFor={`comment-${post.id}`}>Comment:</label>
-              <input
-                type="text"
-                id={`comment-${post.id}`}
-                placeholder="Comment..."
-              />
-              {/* Add submit button if needed */}
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-        ))}
+        {filteredPosts.length > 0 ? (
+          <PostList posts={filteredPosts}></PostList>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </div>
   );
