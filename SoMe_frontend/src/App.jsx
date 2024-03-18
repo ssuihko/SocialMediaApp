@@ -1,10 +1,11 @@
-// App.js
+import { Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { createContext, useState } from "react";
-import { Route } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import Profile from "./components/ProfileView";
 
 export const AppContext = createContext();
 
@@ -56,13 +57,18 @@ function App() {
 
   return (
     <AppContext.Provider value={{ posts, setPosts, comments, setComments }}>
-      <Header />
-      <div className="container">
-        <Sidebar />
-        <div className="body">
-          <Dashboard />
+      <Router>
+        <Header />
+        <div className="container">
+          <Sidebar />
+          <div className="body">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </div>
         </div>
-      </div>
+      </Router>
     </AppContext.Provider>
   );
 }

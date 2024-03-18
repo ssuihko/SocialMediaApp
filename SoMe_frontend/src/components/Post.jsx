@@ -7,7 +7,7 @@ function Post({ post }) {
   const context = useContext(AppContext);
 
   return (
-    <div>
+    <div className="post">
       <h3>{post.title}</h3>
       <p>{post.content}</p>
       <p>Author: {post.author}</p>
