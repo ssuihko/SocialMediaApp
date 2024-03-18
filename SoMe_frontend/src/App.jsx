@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 import { Route } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
+import Header from "./components/Header";
 
 export const AppContext = createContext();
 
@@ -30,7 +31,7 @@ function App() {
 
   return (
     <AppContext.Provider value={{ posts, setPosts }}>
-      <header className="header">Social-Media App</header>
+      <Header />
       <div className="container">
         <div className="sidebar">
           <button>Home</button>
