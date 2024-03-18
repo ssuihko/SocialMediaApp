@@ -5,11 +5,11 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #f5f5f5; /* Set background color for body */
 }
 
 .header {
   background-color: #333;
-  display: flex;
   color: white;
   padding: 1rem;
   text-align: center;
@@ -30,6 +30,45 @@ html {
 .body {
   flex: 1;
   padding: 1rem;
+  display: flex;
+  flex-direction: column; /* Ensure posts and form stack vertically */
+}
+
+.post-form {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem; /* Add margin between the post form and posts */
+  width: calc(100% - 240px); /* Calculate the width to span from sidebar */
+}
+
+.post {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem; /* Add margin between posts */
+}
+
+.post:last-child {
+  margin-bottom: 0; /* Remove margin from the last post */
+}
+
+.post-form label {
+  display: block;
+  margin-bottom: 0.5rem; /* Add spacing between form labels */
+}
+
+.post-form input,
+.post-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc; /* Add border to input elements */
+  border-radius: 4px;
+}
+
+.post-form textarea {
+  resize: vertical; /* Allow vertical resizing of textarea */
 }
 
 .sidebar button {
