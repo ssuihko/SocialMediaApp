@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { AppContext } from "../App";
+import { Link } from "react-router-dom";
 
 function Comment({ comment }) {
   const [update, setUpdate] = useState(false);
@@ -35,7 +36,9 @@ function Comment({ comment }) {
         <p>loading...</p>
       ) : (
         <div className="comment">
-          <h4>Commenter: {user.firstName + " " + user.lastName}</h4>
+          <Link to={`/profile/${user.userId}`}>
+            <h4>Commenter: {user.firstName + " " + user.lastName}</h4>
+          </Link>
           {update ? (
             <form
               className="update-comment-form"
