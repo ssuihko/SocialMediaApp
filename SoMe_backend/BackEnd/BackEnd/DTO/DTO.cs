@@ -74,4 +74,25 @@ namespace BackEnd.DTO
             }
         }
     }
+    class PostResponseDTO
+    {
+        public int postId { get; set; }
+        public string title { get; set; }
+        public string content { get; set; }
+        public int likes { get; set; }
+        public UserDTO user { get; set; }
+        public List<CommentDTO> comments { get; set; } = new List<CommentDTO>();
+        public PostResponseDTO(Post post)
+        {
+            postId = post.postId;
+            title = post.title;
+            content = post.content;
+            likes = post.likes;
+            user = new UserDTO(post.user);
+            foreach(Comment comment in post.comments)
+            {
+                comments.Add(new CommentDTO(comment));
+            }
+        }
+    }
 }

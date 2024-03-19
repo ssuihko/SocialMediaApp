@@ -17,6 +17,6 @@ namespace BackEnd.Models
         public string content { get; set; }
         [Column("likes")]
         public int likes { get; set; }
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<Comment> comments { get; set; } = new List<Comment>();
     }
 }
