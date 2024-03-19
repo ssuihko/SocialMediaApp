@@ -48,7 +48,7 @@ namespace BackEnd.Endpoints
             {
                 return TypedResults.BadRequest();
             }
-            return TypedResults.Ok(result);
+            return TypedResults.Ok(new UserResponseDTO(result));
         }
 
         public static async Task<IResult> UpdateUser(IRepository repository, UpdateUserPayload payload, int userId)
@@ -61,7 +61,7 @@ namespace BackEnd.Endpoints
             {
                 return TypedResults.NotFound();
             }
-            return TypedResults.Ok(result);
+            return TypedResults.Ok(new UserResponseDTO(result));
         }
         public static async Task<IResult> DeleteUser(IRepository repository, int userId)
         {
@@ -69,7 +69,7 @@ namespace BackEnd.Endpoints
             if (user == null) { return TypedResults.BadRequest(); }
             var result = await repository.DeleteUser(userId);
             if (result == null) { return TypedResults.NotFound(); }
-            return TypedResults.Ok(result);
+            return TypedResults.Ok(new UserResponseDTO(result));
         }
 
     }
