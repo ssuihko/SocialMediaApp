@@ -33,6 +33,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.ConfigureUserEndpoint();
+app.ConfigurePostEndpoint();
 app.Run();
 
 public partial class Program { }
