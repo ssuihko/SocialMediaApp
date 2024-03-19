@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../App";
 
-function PostForm({ users }) {
+function PostForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const { posts, setPosts } = useContext(AppContext);
+  const { users } = useContext(AppContext);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
