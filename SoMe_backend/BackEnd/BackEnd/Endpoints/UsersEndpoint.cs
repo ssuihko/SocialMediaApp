@@ -22,7 +22,6 @@ namespace BackEnd.Endpoints
         {
             var users = await repository.GetUsers();
             var usersDTO = new List<UserResponseDTO>();
-            Console.WriteLine(users.Count());
             foreach(var user in users)
             {
                 usersDTO.Add(new UserResponseDTO(user));
