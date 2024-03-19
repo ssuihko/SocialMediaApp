@@ -13,8 +13,6 @@ function Post({ post }) {
   const [author, setAuthor] = useState(null);
 
   useEffect(() => {
-    console.log("Users:", context.users);
-    console.log("Post User ID:", post.user.userId);
     var foundAuthor = context.users.find(
       (x) => parseInt(x.userId) === parseInt(post.user.userId)
     );
