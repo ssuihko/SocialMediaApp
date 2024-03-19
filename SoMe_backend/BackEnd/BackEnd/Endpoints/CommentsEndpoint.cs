@@ -15,7 +15,13 @@ namespace BackEnd.Endpoints
         }
         public static async Task<IResult> GetCommentsByPost(IRepository repository, int postId)
         {
+            var existingPost = await repository.GetPost(postId);
+            if (existingPost == null)
+            {
+                return TypedResults.NotFound(new { error = "Post not found." });
+            }
             var comments = await repository.GetCommentsByPost(postId);
+            
             var commentsDTO = new List<CommentResponseDTO>();
             foreach (var comment in comments)
             {
@@ -27,8 +33,8 @@ namespace BackEnd.Endpoints
         {
             User? user = await repository.GetUser(payload.userId);
             Post? post = await repository.GetPost(payload.postId);
-            if (user == null || post == null) { return TypedResults.NotFound(); }
-
+            if (user == null || post == null) { return TypedResults.NotFound(new {error="User or Post not found"}); }
+            if(!(payload.content is string)) { return TypedResults.BadRequest(new { error = "Content must be of type string." }); }
             Comment comment = new Comment { content = payload.content, postId = payload.postId,userId = payload.userId, likes = 0 };
             var result = await repository.CreateComment(comment, post, user);
             if (result == null)
@@ -40,7 +46,7 @@ namespace BackEnd.Endpoints
         public static async Task<IResult> DeleteComment(IRepository repository, int commentId)
         {
             Comment? comment = await repository.GetComment(commentId);
-            if (comment == null) { return TypedResults.BadRequest(); }
+            if (comment == null) { return TypedResults.NotFound(new {error="Comment not found."}); }
             var result = await repository.DeleteComment(commentId);
             if (result == null) { return TypedResults.NotFound(); }
             return TypedResults.Ok(new CommentResponseDTO(result));
