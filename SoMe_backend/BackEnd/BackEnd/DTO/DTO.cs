@@ -95,4 +95,18 @@ namespace BackEnd.DTO
             }
         }
     }
+    class CommentResponseDTO
+    {
+        public int commentId { get; set; }
+        public string content { get; set; }
+        public int likes { get; set; }
+        public UserDTO User { get; set; }
+        public CommentResponseDTO(Comment comment)
+        {
+            commentId = comment.commentId;
+            content = comment.content;
+            likes = comment.likes;
+            User = new UserDTO(comment.user);
+        }
+    }
 }
