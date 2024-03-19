@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { AppContext } from "../App";
 
+const API_URL = "https://localhost:7234/users/";
+
 function Profile() {
   const context = useContext(AppContext);
-
   const [formData, setFormData] = useState(null);
+  // const [updateFlag, setUpdateFlag] = useState(false);
 
   useEffect(() => {
     setFormData(context.loggedInUser);
@@ -19,10 +21,49 @@ function Profile() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Logic to update contact information
+  // UPDATE
+  const handleUpdateProfile = (formDataNew) => {
+    let updatedList = context.users.map((u) => {
+      if (parseInt(u.userId) === parseInt(formDataNew.userId)) {
+        return { ...u, ...formDataNew };
+      }
+      return u;
+    });
+
+    const PUT_URL = API_URL + formDataNew.userId;
+
+    const putOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formDataNew),
+    };
+
+    console.log("formData: ", formData);
+
+    console.log("url: ", PUT_URL);
+
+    console.log("updated list: ", updatedList);
+
+    fetch(PUT_URL, putOptions)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error(`Something went wrong! Status: ${res.status}`);
+      })
+      .then(() => {
+        context.setContacts([...updatedList]);
+      })
+      .catch((err) => {
+        console.log("error occured: ", err);
+      });
+
+    setFormData(formDataNew);
   };
+
+  // UpdateUserPayload(string username, string firstName, string lastName, string email, string profileImage);
 
   return (
     <div>
@@ -42,7 +83,13 @@ function Profile() {
           <hr />
           <div className="profile-section">
             <h5>Account Info</h5>
-            <form className="profile-info" onSubmit={handleSubmit}>
+            <form
+              className="profile-info"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleUpdateProfile(formData);
+              }}
+            >
               <label htmlFor="firstName">First Name*</label>
               <input
                 type="text"
@@ -73,6 +120,14 @@ function Profile() {
                 id="username"
                 name="username"
                 value={formData.username}
+                onChange={handleInputChange}
+              />
+              <label htmlFor="profileImg">Profile image*</label>
+              <input
+                type="profileImg"
+                id="profileImg"
+                name="profileImg"
+                value={formData.profileImg}
                 onChange={handleInputChange}
               />
               <button type="submit">Update</button>
