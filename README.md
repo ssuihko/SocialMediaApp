@@ -17,6 +17,7 @@ This repository will contain both the frontend and the backend in their respecti
 - Home page all the posts,
 - User should be bale to click on a post and see details
 - User profile page
+- User should be able to update profile data
 - User can view the profile of any other user
 - User should be able to filter posts
 
