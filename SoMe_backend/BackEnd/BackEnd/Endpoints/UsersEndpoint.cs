@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Runtime.CompilerServices;
+using BackEnd.DTO;
 using BackEnd.Models;
 using BackEnd.Repository;
 using static BackEnd.DTO.Payload;
@@ -20,7 +21,13 @@ namespace BackEnd.Endpoints
         public static async Task<IResult> GetUsers(IRepository repository)
         {
             var users = await repository.GetUsers();
-            return TypedResults.Ok(users);
+            var usersDTO = new List<UserResponseDTO>();
+            Console.WriteLine(users.Count());
+            foreach(var user in users)
+            {
+                usersDTO.Add(new UserResponseDTO(user));
+            }
+            return TypedResults.Ok(usersDTO);
         }
         public static async Task<IResult> CreateUser(IRepository repository, CreateUserPayload payload)
         {
@@ -41,7 +48,7 @@ namespace BackEnd.Endpoints
             {
                 return TypedResults.BadRequest();
             }
-            return TypedResults.Ok(result);
+            return TypedResults.Ok(new UserResponseDTO(result));
         }
 
         public static async Task<IResult> UpdateUser(IRepository repository, UpdateUserPayload payload, int userId)
@@ -54,7 +61,7 @@ namespace BackEnd.Endpoints
             {
                 return TypedResults.NotFound();
             }
-            return TypedResults.Ok(result);
+            return TypedResults.Ok(new UserResponseDTO(result));
         }
         public static async Task<IResult> DeleteUser(IRepository repository, int userId)
         {
@@ -62,7 +69,7 @@ namespace BackEnd.Endpoints
             if (user == null) { return TypedResults.BadRequest(); }
             var result = await repository.DeleteUser(userId);
             if (result == null) { return TypedResults.NotFound(); }
-            return TypedResults.Ok(result);
+            return TypedResults.Ok(new UserResponseDTO(result));
         }
 
     }

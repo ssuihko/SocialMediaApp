@@ -13,7 +13,7 @@ namespace BackEnd.Repository
         }
         public async Task<IEnumerable<User>> GetUsers()
         {
-            return await _databaseContext.Users.ToListAsync();
+            return await _databaseContext.Users.Include(u => u.posts).Include(u => u.comments).ToListAsync();
         }
         public async Task<User> CreateUser(User user)
         {
