@@ -41,19 +41,22 @@ function App() {
       id: 1,
       title: "First Post",
       content: "This is the content of the first post.",
-      author: "John Doe",
+      userId: 1,
+      likes: 5,
     },
     {
       id: 2,
       title: "Second Post",
       content: "This is the content of the second post.",
-      author: "Jane Smith",
+      userId: 2,
+      likes: 4,
     },
     {
       id: 3,
       title: "Third Post",
       content: "This is the content of the third post.",
-      author: "Bob Johnson",
+      userId: 3,
+      likes: 2,
     },
   ]);
 
@@ -109,7 +112,7 @@ function App() {
         <div className="body">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:userId" element={<Profile />} />
             <Route path="/post/:postId" element={<Dashboard />} />
           </Routes>
         </div>

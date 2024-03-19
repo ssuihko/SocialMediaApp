@@ -1,17 +1,22 @@
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { AppContext } from "../App";
+import { useParams } from "react-router-dom";
 
 const API_URL = "https://localhost:7234/users/";
 
 function Profile() {
   const context = useContext(AppContext);
+  const { userId } = useParams();
   const [formData, setFormData] = useState(null);
   // const [updateFlag, setUpdateFlag] = useState(false);
 
   useEffect(() => {
-    setFormData(context.loggedInUser);
-  }, [context.loggedInUser]);
+    const thisUser = context.users.find(
+      (x) => parseInt(x.userId) === parseInt(userId)
+    );
+    setFormData(thisUser);
+  }, [context.users, userId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
