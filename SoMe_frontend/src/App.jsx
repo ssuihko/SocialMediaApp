@@ -1,5 +1,4 @@
-import { Route, Routes } from "react-router-dom";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
@@ -14,6 +13,18 @@ const API_URL = "https://localhost:7234/";
 function App() {
   const [users, setUsers] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [viewPost, setViewPost] = useState([]);
+  const [viewPostFlag, setViewPostFlag] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname.includes("/post")) {
+      setViewPostFlag(true);
+    } else {
+      setViewPostFlag(false);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     fetch(API_URL + "users")
@@ -51,6 +62,7 @@ function App() {
       id: 1,
       postId: 1,
       user: "Bob",
+      userId: 3,
       content: "Bobs comment",
       likes: 2,
     },
@@ -58,6 +70,7 @@ function App() {
       id: 2,
       postId: 2,
       user: "John",
+      userId: 1,
       content: "Johns comment",
       likes: 4,
     },
@@ -65,27 +78,42 @@ function App() {
       id: 3,
       postId: 3,
       user: "Jane",
+      userId: 2,
       content: "Janes comment",
       likes: 2,
     },
   ]);
 
+  const findPost = (id) => {
+    setViewPost([]);
+    const postById = posts.find((x) => parseInt(x.id) === parseInt(id));
+    setViewPost([{ ...postById }]);
+  };
+
   return (
     <AppContext.Provider
-      value={{ posts, setPosts, comments, setComments, loggedInUser }}
+      value={{
+        posts: viewPostFlag ? viewPost : posts,
+        viewPostFlag: viewPostFlag,
+        setPosts: setPosts,
+        comments: comments,
+        setComments: setComments,
+        loggedInUser: loggedInUser,
+        users: users,
+        findPost: findPost,
+      }}
     >
-      <Router>
-        <Header />
-        <div className="container">
-          <Sidebar />
-          <div className="body">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
-          </div>
+      <Header />
+      <div className="container">
+        <Sidebar />
+        <div className="body">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/post/:postId" element={<Dashboard />} />
+          </Routes>
         </div>
-      </Router>
+      </div>
     </AppContext.Provider>
   );
 }
