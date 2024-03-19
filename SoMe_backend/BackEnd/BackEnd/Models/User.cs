@@ -18,7 +18,7 @@ namespace BackEnd.Models
         public string email { get; set; }
         [Column("profile_image")]
         public string profileImg { get; set; }
-        public ICollection<Post> Posts { get; set; } = new List<Post>();
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<Post> posts { get; set; } = new List<Post>();
+        public ICollection<Comment> comments { get; set; } = new List<Comment>();
     }
 }

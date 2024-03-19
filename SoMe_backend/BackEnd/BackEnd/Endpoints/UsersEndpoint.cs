@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Runtime.CompilerServices;
+using BackEnd.DTO;
 using BackEnd.Models;
 using BackEnd.Repository;
 using static BackEnd.DTO.Payload;
@@ -20,7 +21,13 @@ namespace BackEnd.Endpoints
         public static async Task<IResult> GetUsers(IRepository repository)
         {
             var users = await repository.GetUsers();
-            return TypedResults.Ok(users);
+            var usersDTO = new List<UserResponseDTO>();
+            Console.WriteLine(users.Count());
+            foreach(var user in users)
+            {
+                usersDTO.Add(new UserResponseDTO(user));
+            }
+            return TypedResults.Ok(usersDTO);
         }
         public static async Task<IResult> CreateUser(IRepository repository, CreateUserPayload payload)
         {
