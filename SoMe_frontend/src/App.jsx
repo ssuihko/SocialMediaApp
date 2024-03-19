@@ -51,6 +51,7 @@ function App() {
       id: 1,
       postId: 1,
       user: "Bob",
+      userId: 3,
       content: "Bobs comment",
       likes: 2,
     },
@@ -58,6 +59,7 @@ function App() {
       id: 2,
       postId: 2,
       user: "John",
+      userId: 1,
       content: "Johns comment",
       likes: 4,
     },
@@ -65,6 +67,7 @@ function App() {
       id: 3,
       postId: 3,
       user: "Jane",
+      userId: 2,
       content: "Janes comment",
       likes: 2,
     },
@@ -72,7 +75,7 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ posts, setPosts, comments, setComments, loggedInUser }}
+      value={{ posts, setPosts, comments, setComments, loggedInUser, users }}
     >
       <Router>
         <Header />
