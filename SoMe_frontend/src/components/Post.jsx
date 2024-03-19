@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Comment from "./Comment";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
 import CreateCommentForm from "./CreateCommentForm";
 import { createContext } from "react";
@@ -10,6 +10,14 @@ const PostContext = createContext();
 
 function Post({ post }) {
   const context = useContext(AppContext);
+  const [author, setAuthor] = useState(null);
+
+  useEffect(() => {
+    var foundAuthor = context.users.find(
+      (x) => parseInt(x.userId) === parseInt(post.userId)
+    );
+    setAuthor(foundAuthor);
+  }, [context.users, post]);
 
   return (
     <div className="post">
@@ -29,7 +37,14 @@ function Post({ post }) {
           </Link>
         </h3>
         <p>{post.content}</p>
-        <p>Author: {post.author}</p>
+        {author === undefined || author === null ? (
+          <div></div>
+        ) : (
+          <Link to={`/profile/${post.userId}`}>
+            Author: {author.firstName + " " + author.lastName}
+          </Link>
+        )}
+
         <div>
           <CreateCommentForm></CreateCommentForm>
           {context.comments
