@@ -19,6 +19,24 @@ function Post({ post }) {
     setAuthor(foundAuthor);
   }, [context.users, post.user.userId]);
 
+  const handleDelete = () => {
+    fetch(`https://localhost:7234/posts/${post.postId}?postId=${post.postId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete post");
+        }
+        // Remove the deleted post from the posts list using filter
+        context.setPosts((prevPosts) =>
+          prevPosts.filter((p) => p.postId !== post.postId)
+        );
+      })
+      .catch((error) => {
+        console.error("Error deleting post:", error.message);
+      });
+  };
+
   return (
     <div className="post">
       <PostContext.Provider
@@ -44,7 +62,7 @@ function Post({ post }) {
             Author: {author.firstName + " " + author.lastName}
           </Link>
         )}
-
+        <button onClick={handleDelete}>Delete</button>
         <div>
           <CreateCommentForm postId={post.postId} />
           {context.comments
