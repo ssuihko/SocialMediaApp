@@ -116,6 +116,7 @@ function App() {
         setComments: setComments,
         loggedInUser: loggedInUser,
         users: users,
+        setUsers: setUsers,
         findPost: findPost,
       }}
     >

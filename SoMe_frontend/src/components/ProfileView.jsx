@@ -23,9 +23,33 @@ function Profile() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logic to update contact information
+    try {
+      const response = await fetch(
+        `https://localhost:7234/users/${userId}?userId=${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+      // Assuming the response contains the updated user data
+      const updatedUser = await response.json();
+      // Update the user data in the context
+      context.setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.userId === updatedUser.userId ? updatedUser : user
+        )
+      );
+    } catch (error) {
+      console.error("Error updating profile:", error.message);
+    }
   };
 
   return (
