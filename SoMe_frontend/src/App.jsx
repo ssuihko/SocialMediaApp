@@ -83,7 +83,7 @@ function App() {
           <Sidebar />
           <div className="body">
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard users={users} />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
           </div>

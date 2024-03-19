@@ -4,7 +4,7 @@ import { AppContext } from "../App";
 import PostList from "./PostList";
 import PostForm from "./PostForm";
 
-function Dashboard() {
+function Dashboard({ users }) {
   const { posts } = useContext(AppContext);
   const [filterWord, setFilterWord] = useState("");
 
@@ -28,7 +28,7 @@ function Dashboard() {
         <textarea id="content" placeholder="Write a new post.."></textarea>
         <button>POST</button>
       </form> */}
-      <PostForm />
+      <PostForm users={users} />
       <div className="filter-form">
         <label htmlFor="filter">Filter:</label>
         <input
