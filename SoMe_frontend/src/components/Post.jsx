@@ -13,11 +13,13 @@ function Post({ post }) {
   const [author, setAuthor] = useState(null);
 
   useEffect(() => {
+    console.log("Users:", context.users);
+    console.log("Post User ID:", post.user.userId);
     var foundAuthor = context.users.find(
-      (x) => parseInt(x.userId) === parseInt(post.userId)
+      (x) => parseInt(x.userId) === parseInt(post.user.userId)
     );
     setAuthor(foundAuthor);
-  }, [context.users, post]);
+  }, [context.users, post.user.userId]);
 
   return (
     <div className="post">
@@ -29,10 +31,10 @@ function Post({ post }) {
         <h3
           onClick={(e) => {
             e.preventDefault();
-            context.findPost(post.id);
+            context.findPost(post.postId);
           }}
         >
-          <Link to={`/post/${post.id}`} className="post-title">
+          <Link to={`/post/${post.postId}`} className="post-title">
             {post.title}
           </Link>
         </h3>
@@ -40,15 +42,15 @@ function Post({ post }) {
         {author === undefined || author === null ? (
           <div></div>
         ) : (
-          <Link to={`/profile/${post.userId}`}>
+          <Link to={`/profile/${author.userId}`}>
             Author: {author.firstName + " " + author.lastName}
           </Link>
         )}
 
         <div>
-          <CreateCommentForm></CreateCommentForm>
+          <CreateCommentForm postId={post.postId} />
           {context.comments
-            .filter((x) => parseInt(x.postId) === parseInt(post.id))
+            .filter((x) => parseInt(x.postId) === parseInt(post.postId))
             .map((comment, index) => (
               <Comment comment={comment} key={index} />
             ))}

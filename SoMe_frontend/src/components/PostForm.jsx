@@ -4,7 +4,7 @@ import { AppContext } from "../App";
 function PostForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const { posts, setPosts } = useContext(AppContext);
+  const { posts, setPosts, loggedInUser } = useContext(AppContext);
   const { users } = useContext(AppContext);
 
   const handleTitleChange = (event) => {
@@ -18,13 +18,11 @@ function PostForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const newPost = {
-      id: posts.length + 1, // Generate unique id for the new post
+      postId: posts.length + 1, // Generate unique id for the new post
       title,
       content,
-      author:
-        users.length > 0
-          ? users[0].firstName + " " + users[0].lastName
-          : "unknown", // You can modify this according to your requirements
+      user: loggedInUser, // You can modify this according to your requirements
+      comments: [],
     };
     setPosts([...posts, newPost]);
     // Reset form fields
