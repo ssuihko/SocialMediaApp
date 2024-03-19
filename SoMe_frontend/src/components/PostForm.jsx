@@ -15,19 +15,46 @@ function PostForm() {
     setContent(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const newPost = {
-      postId: posts.length + 1, // Generate unique id for the new post
+    // const newPostData = {
+    //   postId: posts.length + 1, // Generate unique id for the new post
+    //   title,
+    //   content,
+    //   user: loggedInUser, // You can modify this according to your requirements
+    //   comments: [],
+    // };
+    const newPostData = {
       title,
       content,
-      user: loggedInUser, // You can modify this according to your requirements
-      comments: [],
+      userId: loggedInUser.userId, // Assuming you have a userId property in loggedInUser
     };
-    setPosts([...posts, newPost]);
-    // Reset form fields
-    setTitle("");
-    setContent("");
+    try {
+      // Make a POST request to the API endpoint to create the new post
+      const response = await fetch("https://localhost:7234/" + "posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPostData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create post");
+      }
+
+      // Retrieve the newly created post from the API response
+      const newPost = await response.json();
+
+      // Update the local state with the newly created post
+      setPosts([...posts, newPost]);
+
+      // Reset form fields
+      setTitle("");
+      setContent("");
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   };
 
   return (
