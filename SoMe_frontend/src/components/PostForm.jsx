@@ -5,6 +5,7 @@ function PostForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const { posts, setPosts } = useContext(AppContext);
+  const { users } = useContext(AppContext);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -14,30 +15,25 @@ function PostForm() {
     setContent(event.target.value);
   };
 
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     // Handle form submission logic here
-  //     console.log("Submitted:", { title, content });
-  //     // Reset form fields
-  //     setTitle("");
-  //     setContent("");
-  //   };
   const handleSubmit = (event) => {
     event.preventDefault();
     const newPost = {
       id: posts.length + 1, // Generate unique id for the new post
       title,
       content,
-      author: "Logged In User", // You can modify this according to your requirements
+      author:
+        users.length > 0
+          ? users[0].firstName + " " + users[0].lastName
+          : "unknown", // You can modify this according to your requirements
     };
-    setPosts([...posts, newPost]); // Add the new post to the posts array
+    setPosts([...posts, newPost]);
     // Reset form fields
     setTitle("");
     setContent("");
   };
 
   return (
-    <form className="post-form" onSubmit={handleSubmit}>
+    <form className="post-form" onSubmit={(e) => handleSubmit(e, users)}>
       <label htmlFor="title">Title:</label>
       <input
         type="text"
