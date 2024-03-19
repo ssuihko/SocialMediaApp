@@ -88,5 +88,36 @@ namespace BackEnd.Repository
             _databaseContext.SaveChanges();
             return post;
         }
+        public async Task<IEnumerable<Comment>> GetCommentsByPost(int postId)
+        {
+            return await _databaseContext.Comments.Include(c => c.user).Where(c => c.postId == postId).ToListAsync();
+        }
+        public async Task<Comment?> CreateComment(Comment comment, Post post, User user)
+        {
+            try
+            {
+                await _databaseContext.Comments.AddAsync(comment);
+                post.comments.Add(comment);
+                user.comments.Add(comment);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            _databaseContext.SaveChanges();
+            return comment;
+        }
+        public async Task<Comment?> GetComment(int commentId)
+        {
+            return await _databaseContext.Comments.Include(c => c.user).Include(c => c.post).FirstOrDefaultAsync(c => c.commentId == commentId);
+        }
+        public async Task<Comment?> DeleteComment(int commentId)
+        {
+            Comment? comment = await GetComment(commentId);
+            if (comment == null) { return null; }
+            _databaseContext.Comments.Remove(comment);
+            _databaseContext.SaveChanges();
+            return comment;
+        }
     }
 }

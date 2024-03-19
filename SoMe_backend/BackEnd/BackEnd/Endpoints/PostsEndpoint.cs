@@ -11,9 +11,9 @@ namespace BackEnd.Endpoints
         {
             app.MapGet("/posts", GetPosts);
             app.MapPost("/posts", CreatePost);
-            app.MapGet("/post/{post_id}", GetPost);
-            app.MapPut("/post/{post_id}", UpdatePost);
-            app.MapDelete("/post/{post_id}", DeletePost);
+            app.MapGet("/posts/{post_id}", GetPost);
+            app.MapPut("/posts/{post_id}", UpdatePost);
+            app.MapDelete("/posts/{post_id}", DeletePost);
         }
         public static async Task<IResult> GetPosts(IRepository repository)
         {

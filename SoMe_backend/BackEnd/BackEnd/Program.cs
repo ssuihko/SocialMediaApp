@@ -34,6 +34,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.ConfigureUserEndpoint();
 app.ConfigurePostEndpoint();
+app.ConfigureCommentEndpoint();
 app.Run();
 
 public partial class Program { }
