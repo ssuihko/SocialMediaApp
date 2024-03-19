@@ -13,7 +13,7 @@ function Dashboard() {
     (post) =>
       post.title.toLowerCase().includes(filterWord.toLowerCase()) ||
       post.content.toLowerCase().includes(filterWord.toLowerCase()) ||
-      post.author.toLowerCase().includes(filterWord.toLowerCase())
+      post.user.username.toLowerCase().includes(filterWord.toLowerCase())
   );
 
   const handleFilterChange = (event) => {
@@ -22,13 +22,6 @@ function Dashboard() {
 
   return (
     <div>
-      {/* <form className="post-form">
-        <label htmlFor="title">Title:</label>
-        <input type="text" id="title" placeholder="Title" />
-        <label htmlFor="content">Content:</label>
-        <textarea id="content" placeholder="Write a new post.."></textarea>
-        <button>POST</button>
-      </form> */}
       {viewPostFlag ? (
         <div></div>
       ) : (
