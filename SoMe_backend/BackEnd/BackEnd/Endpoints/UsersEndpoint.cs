@@ -14,9 +14,9 @@ namespace BackEnd.Endpoints
         {
             app.MapGet("/users", GetUsers);
             app.MapPost("/users", CreateUser);
-            app.MapGet("/user/{user_id}", GetUser);
-            app.MapPut("/user/{user_id}", UpdateUser);
-            app.MapDelete("/user/{user_id}", DeleteUser);
+            app.MapGet("/users/{user_id}", GetUser);
+            app.MapPut("/users/{user_id}", UpdateUser);
+            app.MapDelete("/users/{user_id}", DeleteUser);
         }
         public static async Task<IResult> GetUsers(IRepository repository)
         {
