@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 import CreateCommentForm from "./CreateCommentForm";
 import { createContext } from "react";
+import { Link } from "react-router-dom";
 
 const PostContext = createContext();
 
@@ -17,7 +18,16 @@ function Post({ post }) {
           post: post,
         }}
       >
-        <h3>{post.title}</h3>
+        <h3
+          onClick={(e) => {
+            e.preventDefault();
+            context.findPost(post.id);
+          }}
+        >
+          <Link to={`/post/${post.id}`} className="post-title">
+            {post.title}
+          </Link>
+        </h3>
         <p>{post.content}</p>
         <p>Author: {post.author}</p>
         <div>
