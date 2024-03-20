@@ -29,7 +29,7 @@ namespace BackEnd.Endpoints
         {
             User? user = await repository.GetUser(payload.userId);
             if (user == null) { return TypedResults.NotFound(new {error="User not found."}); }
-            if(payload.title== null || !(payload.title is string)||payload.content == null||!(payload.content is string)) { return TypedResults.BadRequest(new { error = "Title and content requred, and must be in string format." }); }
+            if(payload.title== null || !(payload.title is string)||payload.content == null||!(payload.content is string)|| payload.title.Length<=0) { return TypedResults.BadRequest(new { error = "Title and content requred, and must be in string format." }); }
             Post post = new Post { title = payload.title, content = payload.content, userId=payload.userId, likes = 0 };
             var result = await repository.CreatePost(post, user);
             if (result == null)
