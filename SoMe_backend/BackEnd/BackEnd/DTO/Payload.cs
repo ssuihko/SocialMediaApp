@@ -8,5 +8,6 @@
         public record UpdatePostPayload(string title, string content);
         public record CreateCommentPayload(string content, int postId, int userId);
         public record UpdateLikesPayload(int likes);
+        public record UpdateCommentPayload(string content);
     }
 }
