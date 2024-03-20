@@ -32,6 +32,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setPosts(data);
+        console.log("here: ", data);
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
@@ -44,7 +45,6 @@ function App() {
       .then((data) => {
         setUsers(data);
         setLoggedInUser(data[0]);
-        console.log(data);
       });
   }, []);
 

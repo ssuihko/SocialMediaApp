@@ -5,12 +5,16 @@ import { AppContext } from "../App";
 import CreateCommentForm from "./CreateCommentForm";
 import { createContext } from "react";
 import { Link } from "react-router-dom";
+import PostFormUpdate from "./PostFormUpdate";
 
 const PostContext = createContext();
 
 function Post({ post }) {
   const context = useContext(AppContext);
+  const [title, setPostTitle] = useState(post.title);
+  const [content, setPostContent] = useState(post.content);
   const [author, setAuthor] = useState(null);
+  const [updateMode, setUpdateMode] = useState(false);
   const [comments, setComments] = useState([]);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
 
@@ -60,38 +64,85 @@ function Post({ post }) {
       });
   };
 
+  const toggleUpdateButton = () => {
+    setUpdateMode(!updateMode);
+    console.log("upmode: ", updateMode);
+  };
+
   return (
     <div className="post">
       <PostContext.Provider
         value={{
           post: post,
           comments: comments,
+          setPostTitle: setPostTitle,
+          setPostContent: setPostContent,
+          setUpdateMode: setUpdateMode,
           setComments: setComments,
           reloadPosts: reloadPosts,
         }}
       >
-        <h3
-          onClick={(e) => {
-            e.preventDefault();
-            context.findPost(post.postId);
-          }}
-        >
-          <Link to={`/post/${post.postId}`} className="post-title">
-            {post.title}
-          </Link>
-        </h3>
-        {author && (
+        {showDeleteButton ? (
           <div>
-            <Link to={`/profile/${author.userId}`} className="post-author">
-              {author.firstName} {author.lastName}
-            </Link>
+            {updateMode ? (
+              <PostFormUpdate />
+            ) : (
+              <div>
+                <h3
+                  onClick={(e) => {
+                    e.preventDefault();
+                    context.findPost(post.postId);
+                  }}
+                >
+                  <Link to={`/post/${post.postId}`} className="post-title">
+                    {title}
+                  </Link>
+                </h3>
+                {author && (
+                  <div>
+                    <Link
+                      to={`/profile/${author.userId}`}
+                      className="post-author"
+                    >
+                      {author.firstName} {author.lastName}
+                    </Link>
+                  </div>
+                )}
+                <p>{content}</p>
+              </div>
+            )}
+
+            <button className="delete-button" onClick={handleDelete}>
+              Delete
+            </button>
+            <button
+              className="modify-button"
+              onClick={() => toggleUpdateButton()}
+            >
+              Modify
+            </button>
           </div>
-        )}
-        <p>{post.content}</p>
-        {showDeleteButton && (
-          <button className="delete-button" onClick={handleDelete}>
-            Delete
-          </button>
+        ) : (
+          <div>
+            <h3
+              onClick={(e) => {
+                e.preventDefault();
+                context.findPost(post.postId);
+              }}
+            >
+              <Link to={`/post/${post.postId}`} className="post-title">
+                {title}
+              </Link>
+            </h3>
+            {author && (
+              <div>
+                <Link to={`/profile/${author.userId}`} className="post-author">
+                  {author.firstName} {author.lastName}
+                </Link>
+              </div>
+            )}
+            <p>{content}</p>
+          </div>
         )}
         <hr className="horizontal-line" />
         <div>
