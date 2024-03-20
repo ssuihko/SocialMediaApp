@@ -189,7 +189,7 @@ html {
   padding: 5px; /* Add padding inside each comment */
   margin-bottom: 10px; /* Add some margin between comments */
   margin-top: 20px; /* Add some margin between comments */
-  width: 1400px;
+  width: 700px;
   height: 80px;
 }
 
@@ -220,7 +220,7 @@ html {
 }
 
 .textarea-section {
-  width: 99%;
+  width: 50%;
   display: flex;
 }
 
@@ -391,6 +391,13 @@ textarea {
   background-color: #66c1b3;
 }
 
+.like-comment {
+  float: right;
+}
+
+.dislike-comment {
+  float: right;
+}
 .filter-form {
   margin-left: 10px;
 }

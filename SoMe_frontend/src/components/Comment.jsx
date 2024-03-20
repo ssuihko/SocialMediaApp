@@ -57,6 +57,61 @@ function Comment({ comment }) {
     }
   };
 
+  const handleLike = async () => {
+    const newLikesData = {
+      likes: parseInt(comment.likes + 1),
+    };
+
+    try {
+      const response = await fetch(
+        `https://localhost:7234/posts/{post_id}/comments/${comment.commentId}/likes?commentId=${comment.commentId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newLikesData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to like comment");
+      }
+
+      postContext.reloadPosts();
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
+  };
+
+  const handleDislike = async () => {
+    if (comment.likes > 0) {
+      const newLikesData = {
+        likes: comment.likes - 1,
+      };
+      try {
+        const response = await fetch(
+          `https://localhost:7234/posts/{post_id}/comments/${comment.commentId}/likes?commentId=${comment.commentId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newLikesData),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to dislike post");
+        }
+
+        postContext.reloadPosts();
+      } catch (error) {
+        console.error("Error disliking comment: ", error);
+      }
+    }
+  };
+
   return (
     <div>
       {user === undefined ? (
@@ -90,7 +145,29 @@ function Comment({ comment }) {
               </div>
             </form>
           ) : (
-            <p>{comment.content}</p>
+            <div>
+              <button
+                className="like-comment"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLike();
+                }}
+              >
+                Like
+              </button>
+              <button
+                className="dislike-comment"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleDislike();
+                }}
+              >
+                Dislike
+              </button>
+              <p>
+                {comment.content} likes: {comment.likes}
+              </p>
+            </div>
           )}
           <button
             className="modify-btn"
