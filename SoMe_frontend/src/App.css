@@ -179,7 +179,7 @@ html {
   padding: 5px; /* Add padding inside each comment */
   margin-bottom: 10px; /* Add some margin between comments */
   margin-top: 20px; /* Add some margin between comments */
-  width: 90%;
+  width: 1400px;
   height: 80px;
 }
 
@@ -206,7 +206,7 @@ html {
 .create-comment-form {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 1550px;
 }
 
 .textarea-section {
