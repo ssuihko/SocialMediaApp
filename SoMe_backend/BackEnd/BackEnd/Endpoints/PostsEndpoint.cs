@@ -1,6 +1,7 @@
 ﻿using BackEnd.DTO;
 using BackEnd.Models;
 using BackEnd.Repository;
+using Microsoft.Extensions.Hosting;
 using static BackEnd.DTO.Payload;
 
 namespace BackEnd.Endpoints
@@ -14,6 +15,7 @@ namespace BackEnd.Endpoints
             app.MapGet("/posts/{post_id}", GetPost);
             app.MapPut("/posts/{post_id}", UpdatePost);
             app.MapDelete("/posts/{post_id}", DeletePost);
+            app.MapPut("/posts/{post_id}/likes", UpdateLikes);
         }
         public static async Task<IResult> GetPosts(IRepository repository)
         {
@@ -29,7 +31,7 @@ namespace BackEnd.Endpoints
         {
             User? user = await repository.GetUser(payload.userId);
             if (user == null) { return TypedResults.NotFound(new {error="User not found."}); }
-            if(payload.title== null || !(payload.title is string)||payload.content == null||!(payload.content is string)) { return TypedResults.BadRequest(new { error = "Title and content requred, and must be in string format." }); }
+            if(payload.title== null || !(payload.title is string)||payload.content == null||!(payload.content is string)|| payload.title.Length<=0) { return TypedResults.BadRequest(new { error = "Title and content requred, and must be in string format." }); }
             Post post = new Post { title = payload.title, content = payload.content, userId=payload.userId, likes = 0 };
             var result = await repository.CreatePost(post, user);
             if (result == null)
@@ -75,6 +77,17 @@ namespace BackEnd.Endpoints
             Post? post = await repository.GetPost(postId);
             if (post == null) { return TypedResults.NotFound(new {error="Post not found."}); }
             var result = await repository.DeletePost(postId);
+            return TypedResults.Ok(new PostResponseDTO(result));
+        }
+        public static async Task<IResult> UpdateLikes(IRepository repository, UpdateLikesPayload payload, int postId)
+        {
+            Post? postToUpdate = await repository.GetPost(postId);
+            if (postToUpdate == null) { return TypedResults.NotFound(new { error = "Post not found." }); }
+            var result = await repository.UpdatePostLikes(postId, payload.likes);
+            if (result == null)
+            {
+                return TypedResults.NotFound();
+            }
             return TypedResults.Ok(new PostResponseDTO(result));
         }
     }
