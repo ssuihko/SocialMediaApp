@@ -5,7 +5,7 @@ function Header() {
     <header className="header">
       <div className="header-content">
         <img src={Logo} alt="Logo" className="header-icon" />
-        <span className="header-text">Social-Media App</span>
+        <span className="header-text">FriendSpace</span>
       </div>
     </header>
   );
