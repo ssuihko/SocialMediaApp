@@ -37,11 +37,14 @@ namespace BackEnd.DTO
     class CommentDTO
     {
         public int commentId { get; set; }
+
+        public int userId { get; set; }
         public string content { get; set; }
         public int likes { get; set; }
         public CommentDTO(Comment comment)
         {
             commentId = comment.commentId;
+            userId = comment.userId;
             content = comment.content;
             likes = comment.likes;
         }
@@ -98,12 +101,15 @@ namespace BackEnd.DTO
     class CommentResponseDTO
     {
         public int commentId { get; set; }
+
+        public int userId { get; set; }
         public string content { get; set; }
         public int likes { get; set; }
         public UserDTO User { get; set; }
         public CommentResponseDTO(Comment comment)
         {
             commentId = comment.commentId;
+            userId = comment.userId;
             content = comment.content;
             likes = comment.likes;
             User = new UserDTO(comment.user);

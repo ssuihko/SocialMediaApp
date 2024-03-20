@@ -10,9 +10,38 @@ function CreateCommentForm() {
   const context = useContext(AppContext);
   const postContext = useContext(PostContext);
 
-  const addComment = (formData) => {
-    formData.postId = postContext.post.id; // change later
-    console.log(formData);
+  const addComment = async () => {
+    const newCommentData = {
+      content: formData.content,
+      postId: postContext.post.postId,
+      userId: context.loggedInUser.userId, // Assuming you have a userId property in loggedInUser
+    };
+
+    try {
+      // Make a POST request to the API endpoint to create the new post
+      const response = await fetch(
+        `https://localhost:7234/posts/${postContext.post.postId}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newCommentData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to create comment");
+      }
+
+      postContext.reloadPosts();
+
+      // Reset form fields
+      setFormData({});
+    } catch (error) {
+      console.error("Error creating comment:", error);
+    }
+
     setFlag(true);
   };
 
@@ -46,7 +75,7 @@ function CreateCommentForm() {
           className="create-comment-form"
           onSubmit={(e) => {
             e.preventDefault();
-            addComment(formData);
+            addComment();
           }}
         >
           <div className="textarea-section">
