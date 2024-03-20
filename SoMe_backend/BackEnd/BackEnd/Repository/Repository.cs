@@ -134,5 +134,19 @@ namespace BackEnd.Repository
             _databaseContext.SaveChanges();
             return comment;
         }
+        public async Task<Post?> UpdatePostLikes(int postId, int likes)
+        {
+            Post? postToUpdate = await GetPost(postId);
+            postToUpdate.likes = likes;
+            _databaseContext.SaveChanges();
+            return postToUpdate;
+        }
+        public async Task<Comment?> UpdateCommentLikes(int commentId, int likes)
+        {
+            Comment? commentToUpdate = await GetComment(commentId);
+            commentToUpdate.likes = likes;
+            _databaseContext.SaveChanges();
+            return commentToUpdate;
+        }
     }
 }
