@@ -7,7 +7,8 @@ function PostFormUpdate() {
   const [content, setContent] = useState("");
   const { users, posts } = useContext(AppContext);
   const appContext = useContext(AppContext);
-  const { post, setUpdateMode } = useContext(PostContext);
+  const { post, setUpdateMode, setPostTitle, setPostContent } =
+    useContext(PostContext);
 
   useEffect(() => {
     setTitle(post.title);
@@ -60,6 +61,8 @@ function PostFormUpdate() {
 
       setTitle("");
       setContent("");
+      setPostTitle(updatedPost.title);
+      setPostContent(updatedPost.content);
       setUpdateMode(false);
     } catch (error) {
       console.error("Error updating post:", error);

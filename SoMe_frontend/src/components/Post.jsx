@@ -11,6 +11,8 @@ const PostContext = createContext();
 
 function Post({ post }) {
   const context = useContext(AppContext);
+  const [title, setPostTitle] = useState(post.title);
+  const [content, setPostContent] = useState(post.content);
   const [author, setAuthor] = useState(null);
   const [updateMode, setUpdateMode] = useState(false);
   const [comments, setComments] = useState([]);
@@ -73,6 +75,8 @@ function Post({ post }) {
         value={{
           post: post,
           comments: comments,
+          setPostTitle: setPostTitle,
+          setPostContent: setPostContent,
           setUpdateMode: setUpdateMode,
           setComments: setComments,
           reloadPosts: reloadPosts,
@@ -91,7 +95,7 @@ function Post({ post }) {
                   }}
                 >
                   <Link to={`/post/${post.postId}`} className="post-title">
-                    {post.title}
+                    {title}
                   </Link>
                 </h3>
                 {author && (
@@ -104,7 +108,7 @@ function Post({ post }) {
                     </Link>
                   </div>
                 )}
-                <p>{post.content}</p>
+                <p>{content}</p>
               </div>
             )}
 
@@ -127,7 +131,7 @@ function Post({ post }) {
               }}
             >
               <Link to={`/post/${post.postId}`} className="post-title">
-                {post.title}
+                {title}
               </Link>
             </h3>
             {author && (
@@ -137,7 +141,7 @@ function Post({ post }) {
                 </Link>
               </div>
             )}
-            <p>{post.content}</p>
+            <p>{content}</p>
           </div>
         )}
         <hr className="horizontal-line" />
