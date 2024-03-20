@@ -64,7 +64,9 @@ function PostForm() {
         value={content}
         onChange={handleContentChange}
       ></textarea>
-      <button type="submit">POST</button>
+      <button className="post-form-button" type="submit">
+        POST
+      </button>
     </form>
   );
 }
