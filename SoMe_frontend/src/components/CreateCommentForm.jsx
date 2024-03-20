@@ -10,6 +10,14 @@ function CreateCommentForm() {
   const context = useContext(AppContext);
   const postContext = useContext(PostContext);
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name !== undefined) {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
   const addComment = async () => {
     const newCommentData = {
       content: formData.content,
@@ -36,21 +44,21 @@ function CreateCommentForm() {
 
       postContext.reloadPosts();
 
-      // Reset form fields
+      postContext.reloadComments(parseInt(postContext.post.postId));
+
+      const newComment = await response.json();
+
+      postContext.setComments([...postContext.comments, newComment]);
+
+      console.log("updated comments: ");
+      console.log(newComment);
+
       setFormData({});
     } catch (error) {
       console.error("Error creating comment:", error);
     }
 
     setFlag(true);
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-
-    if (name !== undefined) {
-      setFormData({ ...formData, [name]: value });
-    }
   };
 
   useEffect(() => {

@@ -5,10 +5,9 @@ import { PostContext } from "./Post";
 function PostFormUpdate() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const { users, posts } = useContext(AppContext);
+  const { users, allPosts } = useContext(AppContext);
   const appContext = useContext(AppContext);
-  const { post, setUpdateMode, setPostTitle, setPostContent } =
-    useContext(PostContext);
+  const { post, setPostTitle, setPostContent } = useContext(PostContext);
 
   useEffect(() => {
     setTitle(post.title);
@@ -49,21 +48,20 @@ function PostFormUpdate() {
 
       const updatedPost = await response.json();
 
-      const newPosts = posts.map((x) => {
-        if (x.postId === updatedPost.postId) {
-          return updatedPost;
-        } else {
-          return x;
+      let newPosts = allPosts.map((item) => {
+        if (parseInt(item.postId) === parseInt(updatedPost.postId)) {
+          return { ...item, ...updatedPost };
         }
+        return item;
       });
+
+      setPostTitle(title);
+      setPostContent(content);
 
       appContext.setPosts([...newPosts]);
 
       setTitle("");
       setContent("");
-      setPostTitle(updatedPost.title);
-      setPostContent(updatedPost.content);
-      setUpdateMode(false);
     } catch (error) {
       console.error("Error updating post:", error);
     }

@@ -38,12 +38,14 @@ namespace BackEnd.DTO
     {
         public int commentId { get; set; }
 
+        public int postId { get; set; }
         public int userId { get; set; }
         public string content { get; set; }
         public int likes { get; set; }
         public CommentDTO(Comment comment)
         {
             commentId = comment.commentId;
+            postId = comment.postId;
             userId = comment.userId;
             content = comment.content;
             likes = comment.likes;
@@ -102,6 +104,7 @@ namespace BackEnd.DTO
     {
         public int commentId { get; set; }
 
+        public int postId { get; set; }
         public int userId { get; set; }
         public string content { get; set; }
         public int likes { get; set; }
@@ -109,6 +112,7 @@ namespace BackEnd.DTO
         public CommentResponseDTO(Comment comment)
         {
             commentId = comment.commentId;
+            postId = comment.postId;
             userId = comment.userId;
             content = comment.content;
             likes = comment.likes;
