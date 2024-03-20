@@ -69,41 +69,52 @@ function Profile() {
           </div>
           <hr />
           <div className="profile-section">
-            <h5>Account Info</h5>
             <form className="profile-info" onSubmit={handleSubmit}>
-              <label htmlFor="firstName">First Name*</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-              />
-              <label htmlFor="lastName">Last Name*</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-              />
-              <label htmlFor="email">Email*</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-              <label htmlFor="username">Username*</label>
-              <input
-                type="username"
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleInputChange}
-              />
-              <button type="submit">Update</button>
+              <div className="grid-container">
+                <div>
+                  <label htmlFor="firstName">First Name*</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="lastName">Last Name*</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email">Email*</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="username">Username*</label>
+                  <input
+                    type="username"
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+              <button className="Update-profile-btn" type="submit">
+                Update
+              </button>
             </form>
           </div>
           <div className="profile-section"></div>
