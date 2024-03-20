@@ -28,11 +28,10 @@ function App() {
   }, [location.pathname]);
 
   useEffect(() => {
-    // Fetch posts from API_URL
     fetch(API_URL + "posts")
       .then((response) => response.json())
       .then((data) => {
-        setPosts(data); // Update posts state with fetched data
+        setPosts(data);
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
@@ -48,30 +47,6 @@ function App() {
         console.log(data);
       });
   }, []);
-
-  // const [posts, setPosts] = useState([
-  //   {
-  //     id: 1,
-  //     title: "First Post",
-  //     content: "This is the content of the first post.",
-  //     userId: 1,
-  //     likes: 5,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Second Post",
-  //     content: "This is the content of the second post.",
-  //     userId: 2,
-  //     likes: 4,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Third Post",
-  //     content: "This is the content of the third post.",
-  //     userId: 3,
-  //     likes: 2,
-  //   },
-  // ]);
 
   const [comments, setComments] = useState([
     {

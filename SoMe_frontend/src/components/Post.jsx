@@ -11,6 +11,7 @@ const PostContext = createContext();
 function Post({ post }) {
   const context = useContext(AppContext);
   const [author, setAuthor] = useState(null);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
 
   useEffect(() => {
     var foundAuthor = context.users.find(
@@ -18,6 +19,10 @@ function Post({ post }) {
     );
     setAuthor(foundAuthor);
   }, [context.users, post.user.userId]);
+
+  useEffect(() => {
+    setShowDeleteButton(context.viewPostFlag);
+  }, [context.viewPostFlag]);
 
   const handleDelete = () => {
     fetch(`https://localhost:7234/posts/${post.postId}?postId=${post.postId}`, {
@@ -27,7 +32,7 @@ function Post({ post }) {
         if (!response.ok) {
           throw new Error("Failed to delete post");
         }
-        // Remove the deleted post from the posts list using filter
+
         context.setPosts((prevPosts) =>
           prevPosts.filter((p) => p.postId !== post.postId)
         );
@@ -54,15 +59,20 @@ function Post({ post }) {
             {post.title}
           </Link>
         </h3>
-        <p>{post.content}</p>
-        {author === undefined || author === null ? (
-          <div></div>
-        ) : (
-          <Link to={`/profile/${author.userId}`}>
-            Author: {author.firstName + " " + author.lastName}
-          </Link>
+        {author && (
+          <div>
+            <Link to={`/profile/${author.userId}`} className="post-author">
+              {author.firstName} {author.lastName}
+            </Link>
+          </div>
         )}
-        <button onClick={handleDelete}>Delete</button>
+        <p>{post.content}</p>
+        {showDeleteButton && (
+          <button className="delete-button" onClick={handleDelete}>
+            Delete
+          </button>
+        )}
+        <hr className="horizontal-line" />
         <div>
           <CreateCommentForm postId={post.postId} />
           {context.comments

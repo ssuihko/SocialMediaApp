@@ -39,9 +39,9 @@ function Profile() {
       if (!response.ok) {
         throw new Error("Failed to update profile");
       }
-      // Assuming the response contains the updated user data
+
       const updatedUser = await response.json();
-      // Update the user data in the context
+
       context.setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user.userId === updatedUser.userId ? updatedUser : user
