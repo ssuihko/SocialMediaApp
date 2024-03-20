@@ -44,6 +44,16 @@ namespace BackEnd.Repository
         {
             User? user = await GetUser(userId);
             if (user == null) { return null; }
+            var commentsCopy = new List<Comment>(user.comments);
+            foreach(Comment comment in commentsCopy)
+            {
+                await DeleteComment(comment.commentId);
+            }
+            var postsCopy = new List<Post>(user.posts);
+            foreach (Post post in postsCopy)
+            {
+                await DeletePost(post.postId);
+            }
             _databaseContext.Users.Remove(user);
             _databaseContext.SaveChanges();
             return user;
@@ -84,6 +94,11 @@ namespace BackEnd.Repository
         {
             Post? post = await GetPost(postId);
             if (post == null) { return null; }
+            var commentsCopy = new List<Comment>(post.comments);
+            foreach (Comment comment in commentsCopy)
+            {
+                await DeleteComment(comment.commentId);
+            }
             _databaseContext.Posts.Remove(post);
             _databaseContext.SaveChanges();
             return post;
