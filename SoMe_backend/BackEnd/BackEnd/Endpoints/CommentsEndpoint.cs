@@ -12,6 +12,7 @@ namespace BackEnd.Endpoints
             app.MapGet("/posts/{post_id}/comments", GetCommentsByPost);
             app.MapPost("/posts/{post_id}/comments", CreateComment);
             app.MapDelete("/posts/{post_id}/comments/{comment_id}", DeleteComment);
+            app.MapPut("/posts/{post_id}/comments/{comment_id}/likes", UpdateLikes);
         }
         public static async Task<IResult> GetCommentsByPost(IRepository repository, int postId)
         {
@@ -49,6 +50,17 @@ namespace BackEnd.Endpoints
             if (comment == null) { return TypedResults.NotFound(new {error="Comment not found."}); }
             var result = await repository.DeleteComment(commentId);
             if (result == null) { return TypedResults.NotFound(); }
+            return TypedResults.Ok(new CommentResponseDTO(result));
+        }
+        public static async Task<IResult> UpdateLikes(IRepository repository, UpdateLikesPayload payload, int commentId)
+        {
+            Comment? commentToUpdate = await repository.GetComment(commentId);
+            if (commentToUpdate == null) { return TypedResults.NotFound(new { error = "Comment not found." }); }
+            var result = await repository.UpdateCommentLikes(commentId, payload.likes);
+            if (result == null)
+            {
+                return TypedResults.NotFound();
+            }
             return TypedResults.Ok(new CommentResponseDTO(result));
         }
     }
