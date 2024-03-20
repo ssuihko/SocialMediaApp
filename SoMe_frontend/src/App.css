@@ -116,6 +116,16 @@ html {
 .post-form textarea {
   resize: vertical; /* Allow vertical resizing of textarea */
 }
+.post-form-button {
+  background-color: rgb(82, 179, 158); /* Standard color for the button */
+  color: white; /* Text color */
+
+  border: none; /* Remove border */
+  padding: 0.5rem 1rem; /* Add padding */
+  border-radius: 4px; /* Add border radius */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Add transition for smooth */
+}
 
 .post-form button[type="submit-post-update"] {
   background-color: rgb(82, 179, 158); /* Standard color for the button */
@@ -383,4 +393,49 @@ textarea {
 
 .filter-form {
   margin-left: 10px;
+}
+
+.post-form-update label {
+  display: block;
+  margin-bottom: 0.5rem; /* Add spacing between form labels */
+}
+
+.post-form-update input,
+.post-form-update textarea {
+  width: 98%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc; /* Add border to input elements */
+  border-radius: 4px;
+}
+
+.post-form-update textarea {
+  resize: vertical; /* Allow vertical resizing of textarea */
+}
+.post-form-update-button {
+  background-color: rgb(82, 179, 158); /* Standard color for the button */
+  color: white; /* Text color */
+
+  border: none; /* Remove border */
+  padding: 0.5rem 1rem; /* Add padding */
+  border-radius: 4px; /* Add border radius */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Add transition for smooth */
+}
+
+.post-form-update button[type="submit-post-update"] {
+  background-color: rgb(82, 179, 158); /* Standard color for the button */
+  color: white; /* Text color */
+
+  border: none; /* Remove border */
+  padding: 0.5rem 1rem; /* Add padding */
+  border-radius: 4px; /* Add border radius */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Add transition for smooth */
+  margin-bottom: 20px;
+  width: 79px;
+}
+
+.post-form-update button[type="submit-post-update"]:hover {
+  background-color: #66c1b3; /* New color on hover */
 }

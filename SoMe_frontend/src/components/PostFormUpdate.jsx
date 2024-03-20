@@ -70,7 +70,7 @@ function PostFormUpdate() {
   };
 
   return (
-    <form className="post-form" onSubmit={(e) => handleUpdate(e, users)}>
+    <form className="post-form-update" onSubmit={(e) => handleUpdate(e, users)}>
       <label htmlFor="title">Title:</label>
       <input
         type="text"
