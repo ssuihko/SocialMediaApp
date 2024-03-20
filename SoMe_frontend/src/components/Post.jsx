@@ -11,14 +11,32 @@ const PostContext = createContext();
 function Post({ post }) {
   const context = useContext(AppContext);
   const [author, setAuthor] = useState(null);
+  const [comments, setComments] = useState([]);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
 
+  // find post author
   useEffect(() => {
     var foundAuthor = context.users.find(
       (x) => parseInt(x.userId) === parseInt(post.user.userId)
     );
     setAuthor(foundAuthor);
   }, [context.users, post.user.userId]);
+
+  // GET Post comments
+  useEffect(() => {
+    setComments(post.comments);
+  }, [post.comments]);
+
+  const reloadPosts = () => {
+    fetch("https://localhost:7234/posts")
+      .then((response) => response.json())
+      .then((data) => {
+        context.setPosts(data); // Update posts state with fetched data
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  };
 
   useEffect(() => {
     setShowDeleteButton(context.viewPostFlag);
@@ -47,6 +65,9 @@ function Post({ post }) {
       <PostContext.Provider
         value={{
           post: post,
+          comments: comments,
+          setComments: setComments,
+          reloadPosts: reloadPosts,
         }}
       >
         <h3
@@ -75,11 +96,9 @@ function Post({ post }) {
         <hr className="horizontal-line" />
         <div>
           <CreateCommentForm postId={post.postId} />
-          {context.comments
-            .filter((x) => parseInt(x.postId) === parseInt(post.postId))
-            .map((comment, index) => (
-              <Comment comment={comment} key={index} />
-            ))}
+          {comments.map((comment, index) => (
+            <Comment comment={comment} key={index} />
+          ))}
         </div>
       </PostContext.Provider>
     </div>
