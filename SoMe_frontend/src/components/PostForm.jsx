@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { AppContext } from "../App";
 
 function PostForm() {
@@ -17,20 +17,13 @@ function PostForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const newPostData = {
-    //   postId: posts.length + 1, // Generate unique id for the new post
-    //   title,
-    //   content,
-    //   user: loggedInUser, // You can modify this according to your requirements
-    //   comments: [],
-    // };
+
     const newPostData = {
       title,
       content,
-      userId: loggedInUser.userId, // Assuming you have a userId property in loggedInUser
+      userId: loggedInUser.userId,
     };
     try {
-      // Make a POST request to the API endpoint to create the new post
       const response = await fetch("https://localhost:7234/" + "posts", {
         method: "POST",
         headers: {
@@ -43,13 +36,10 @@ function PostForm() {
         throw new Error("Failed to create post");
       }
 
-      // Retrieve the newly created post from the API response
       const newPost = await response.json();
 
-      // Update the local state with the newly created post
       setPosts([...posts, newPost]);
 
-      // Reset form fields
       setTitle("");
       setContent("");
     } catch (error) {

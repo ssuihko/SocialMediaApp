@@ -55,7 +55,7 @@ function Comment({ comment }) {
       ) : (
         <div className="comment">
           <Link to={`/profile/${user.userId}`}>
-            <h4>Commenter: {user.firstName + " " + user.lastName}</h4>
+            <h4>{user.firstName + " " + user.lastName}</h4>
           </Link>
           {update ? (
             <form

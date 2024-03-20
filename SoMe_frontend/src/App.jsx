@@ -28,11 +28,10 @@ function App() {
   }, [location.pathname]);
 
   useEffect(() => {
-    // Fetch posts from API_URL
     fetch(API_URL + "posts")
       .then((response) => response.json())
       .then((data) => {
-        setPosts(data); // Update posts state with fetched data
+        setPosts(data);
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);

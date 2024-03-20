@@ -87,7 +87,7 @@ function CreateCommentForm() {
               value={formData.content}
               onChange={handleInputChange}
             ></textarea>
-            <button type="submit" className="img-update-btn">
+            <button type="submit" className="send-button">
               Send
             </button>
           </div>
