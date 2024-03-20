@@ -214,7 +214,7 @@ function Post({ post }) {
               Delete
             </button>
             <button
-              className="modify-button"
+              className="modify-post-button"
               onClick={() => toggleUpdateButton()}
             >
               Modify
@@ -233,7 +233,7 @@ function Post({ post }) {
               </Link>
             </h3>
             {author && (
-              <div>
+              <div className="text-area-for-post">
                 <Link to={`/profile/${author.userId}`} className="post-author">
                   {author.firstName} {author.lastName}
                 </Link>

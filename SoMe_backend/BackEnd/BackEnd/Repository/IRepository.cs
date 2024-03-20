@@ -20,5 +20,6 @@ namespace BackEnd.Repository
         Task<Comment?> DeleteComment(int commentId);
         Task<Post?> UpdatePostLikes(int postId, int likes);
         Task<Comment?> UpdateCommentLikes(int commentId, int likes);
+        Task<Comment?> UpdateComment(int commenId, string content);
     }
 }

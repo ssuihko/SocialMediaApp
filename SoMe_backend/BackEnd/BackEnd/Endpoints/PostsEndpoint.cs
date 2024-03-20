@@ -57,9 +57,9 @@ namespace BackEnd.Endpoints
                     return TypedResults.BadRequest(new { error = "Title must be string type." });
                 }
             }
-            if (!(payload.title is string))
+            if (!(payload.content is string))
             {
-                if (!(payload.title == null))
+                if (!(payload.content == null))
                 {
                     return TypedResults.BadRequest(new { error = "Content must be string type." });
                 }

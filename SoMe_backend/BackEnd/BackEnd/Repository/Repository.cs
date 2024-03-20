@@ -148,5 +148,14 @@ namespace BackEnd.Repository
             _databaseContext.SaveChanges();
             return commentToUpdate;
         }
+        public async Task<Comment?> UpdateComment(int commentId, string content)
+        {
+            Comment? commentToUpdate = await GetComment(commentId);
+
+            commentToUpdate.content = content;
+
+            _databaseContext.SaveChanges();
+            return commentToUpdate;
+        }
     }
 }
