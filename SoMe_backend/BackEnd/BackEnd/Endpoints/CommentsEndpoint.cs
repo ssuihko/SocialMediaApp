@@ -13,6 +13,7 @@ namespace BackEnd.Endpoints
             app.MapPost("/posts/{post_id}/comments", CreateComment);
             app.MapDelete("/posts/{post_id}/comments/{comment_id}", DeleteComment);
             app.MapPut("/posts/{post_id}/comments/{comment_id}/likes", UpdateLikes);
+            app.MapPut("/posts/{post_id}/comments/{comment_id}", UpdateComment);
         }
         public static async Task<IResult> GetCommentsByPost(IRepository repository, int postId)
         {
@@ -57,6 +58,28 @@ namespace BackEnd.Endpoints
             Comment? commentToUpdate = await repository.GetComment(commentId);
             if (commentToUpdate == null) { return TypedResults.NotFound(new { error = "Comment not found." }); }
             var result = await repository.UpdateCommentLikes(commentId, payload.likes);
+            if (result == null)
+            {
+                return TypedResults.NotFound();
+            }
+            return TypedResults.Ok(new CommentResponseDTO(result));
+        }
+        public static async Task<IResult> UpdateComment(IRepository repository, UpdateCommentPayload payload, int commentId)
+        {
+            Comment? commentToUpdate = await repository.GetComment(commentId);
+            if (commentToUpdate == null) { return TypedResults.NotFound(new { error = "Comment not found." }); }
+            if (!(payload.content is string))
+            {
+                if (!(payload.content == null))
+                {
+                    return TypedResults.BadRequest(new { error = "Content must be string type." });
+                }
+                if(payload.content.Length  == 0)
+                {
+                    return TypedResults.BadRequest(new { error = "Comment must have length > 0." });
+                }
+            }
+            var result = await repository.UpdateComment(commentId, payload.content);
             if (result == null)
             {
                 return TypedResults.NotFound();
