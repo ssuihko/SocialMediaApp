@@ -32,6 +32,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setPosts(data);
+        console.log("here: ", data);
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
@@ -44,36 +45,8 @@ function App() {
       .then((data) => {
         setUsers(data);
         setLoggedInUser(data[0]);
-        console.log(data);
       });
   }, []);
-
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      postId: 1,
-      user: "Bob",
-      userId: 3,
-      content: "Bobs comment",
-      likes: 2,
-    },
-    {
-      id: 2,
-      postId: 2,
-      user: "John",
-      userId: 1,
-      content: "Johns comment",
-      likes: 4,
-    },
-    {
-      id: 3,
-      postId: 3,
-      user: "Jane",
-      userId: 2,
-      content: "Janes comment",
-      likes: 2,
-    },
-  ]);
 
   const findPost = (id) => {
     setViewPost([]);
@@ -87,8 +60,6 @@ function App() {
         posts: viewPostFlag ? viewPost : posts,
         viewPostFlag: viewPostFlag,
         setPosts: setPosts,
-        comments: comments,
-        setComments: setComments,
         loggedInUser: loggedInUser,
         users: users,
         setUsers: setUsers,

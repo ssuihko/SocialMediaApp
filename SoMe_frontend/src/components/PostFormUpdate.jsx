@@ -1,12 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 import { AppContext } from "../App";
-import PropTypes from "prop-types";
+import { PostContext } from "./Post";
 
-function PostFormUpdate({ post, setUpdateMode }) {
+function PostFormUpdate() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const { setPosts } = useContext(AppContext);
-  const { users } = useContext(AppContext);
+  const { users, posts } = useContext(AppContext);
+  const appContext = useContext(AppContext);
+  const { post, setUpdateMode } = useContext(PostContext);
 
   useEffect(() => {
     setTitle(post.title);
@@ -29,12 +30,6 @@ function PostFormUpdate({ post, setUpdateMode }) {
       content: content,
     };
 
-    console.log(updatedPostData);
-
-    console.log(
-      "URL: ",
-      `https://localhost:7234/posts/${post.postId}?postId=${post.postId}`
-    );
     try {
       const response = await fetch(
         `https://localhost:7234/posts/${post.postId}?postId=${post.postId}`,
@@ -53,11 +48,15 @@ function PostFormUpdate({ post, setUpdateMode }) {
 
       const updatedPost = await response.json();
 
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post.postId === updatedPost.postId ? updatedPost : post
-        )
-      );
+      const newPosts = posts.map((x) => {
+        if (x.postId === updatedPost.postId) {
+          return updatedPost;
+        } else {
+          return x;
+        }
+      });
+
+      appContext.setPosts([...newPosts]);
 
       setTitle("");
       setContent("");
@@ -88,10 +87,5 @@ function PostFormUpdate({ post, setUpdateMode }) {
     </form>
   );
 }
-
-PostFormUpdate.propTypes = {
-  post: PropTypes.object,
-  setUpdateMode: PropTypes.func,
-};
 
 export default PostFormUpdate;
