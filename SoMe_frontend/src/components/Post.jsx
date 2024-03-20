@@ -116,7 +116,7 @@ function Post({ post }) {
               Delete
             </button>
             <button
-              className="modify-button"
+              className="modify-post-button"
               onClick={() => toggleUpdateButton()}
             >
               Modify

@@ -54,7 +54,6 @@ function Profile() {
 
   return (
     <div>
-      <h4>Profile</h4>
       {formData === null ? (
         <p>Loading...</p>
       ) : (
