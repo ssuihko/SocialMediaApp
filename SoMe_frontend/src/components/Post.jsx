@@ -163,7 +163,6 @@ function Post({ post }) {
 
   const toggleUpdateButton = () => {
     setUpdateMode(!updateMode);
-    console.log("upmode: ", updateMode);
   };
 
   return (
