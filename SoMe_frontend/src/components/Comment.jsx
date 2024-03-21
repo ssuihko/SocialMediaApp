@@ -61,6 +61,23 @@ function Comment({ comment }) {
       return formData;
     }
   };
+  const handleDelete = () => {
+    fetch(
+      `https://localhost:7234/posts/${postContext.post.postId}*/comments/${comment.commentId}?commentId=${comment.commentId}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete comment");
+        }
+        postContext.reloadPosts();
+      })
+      .catch((error) => {
+        console.error("Error deleting comment:", error.message);
+      });
+  };
 
   return (
     <div>
@@ -148,6 +165,9 @@ function Comment({ comment }) {
               <p>{comment.content} </p>
             </div>
           )}
+          <button className="delete-button" onClick={handleDelete}>
+            Delete
+          </button>
           <button
             className="modify-btn"
             onClick={(e) => {
