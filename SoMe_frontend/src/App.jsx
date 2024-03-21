@@ -55,6 +55,29 @@ function App() {
     setViewPost([{ ...postById }]);
   };
 
+  const reloadOnePost = (thisId) => {
+    console.log("IN RLD ONE POST");
+    fetch(`https://localhost:7234/posts/${thisId}?postId=${thisId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setViewPost([{ ...data }]);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  };
+
+  const reloadPosts = () => {
+    fetch("https://localhost:7234/posts")
+      .then((response) => response.json())
+      .then((data) => {
+        setPosts(data); // Update posts state with fetched data
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -66,6 +89,8 @@ function App() {
         users: users,
         setUsers: setUsers,
         findPost: findPost,
+        reloadPosts: reloadPosts,
+        reloadOnePost: reloadOnePost,
       }}
     >
       <Header />

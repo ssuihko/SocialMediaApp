@@ -42,15 +42,13 @@ function CreateCommentForm() {
         throw new Error("Failed to create comment");
       }
 
-      postContext.reloadPosts();
-
+      context.reloadPosts();
       postContext.reloadComments(parseInt(postContext.post.postId));
 
       const newComment = await response.json();
 
       postContext.setComments([...postContext.comments, newComment]);
 
-      console.log("updated comments: ");
       console.log(newComment);
 
       setFormData({});

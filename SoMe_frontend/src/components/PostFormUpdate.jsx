@@ -55,13 +55,15 @@ function PostFormUpdate() {
         return item;
       });
 
-      setPostTitle(title);
-      setPostContent(content);
+      // appContext.reloadPosts();
+      // setPostTitle(title);
+      // setPostContent(content);
+      appContext.reloadOnePost(post.postId);
 
       appContext.setPosts([...newPosts]);
-
       setTitle("");
       setContent("");
+      appContext.findPost(updatedPost.postId); // reset POST view
     } catch (error) {
       console.error("Error updating post:", error);
     }
