@@ -7,10 +7,6 @@ import { createContext } from "react";
 import { Link } from "react-router-dom";
 import PostFormUpdate from "./PostFormUpdate";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import {
-  handleLikePost,
-  handleDislikePost,
-} from "../helperfunctions/PostInterractions";
 
 const PostContext = createContext();
 
@@ -25,6 +21,8 @@ function Post({ post }) {
   const [likes, setLikes] = useState(post.likes);
   const [author, setAuthor] = useState(null);
 
+  const [likesUpdate, setLikesUpdate] = useState(null);
+
   const [updateMode, setUpdateMode] = useState(false);
   const [comments, setComments] = useState([]);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
@@ -33,11 +31,28 @@ function Post({ post }) {
   useEffect(() => {
     console.log("comments reset again...");
 
+    if (postId === undefined) {
+      setLikesUpdate(null);
+    }
+
     if (postId !== undefined) {
-      console.log("postID: ", postId);
+      if (comments.length > 0) {
+        if (comments[0].commentId !== post.comments[0].commentId) {
+          setComments([]);
+        }
+      }
       reloadComments(postId);
+
+      if (likes !== post.likes) {
+        if (likesUpdate !== null) {
+          setLikes(likesUpdate);
+        } else {
+          setLikes(post.likes);
+        }
+      }
     } else {
       setComments(post.comments);
+      setLikes(post.likes);
     }
 
     if (updateMode) {
@@ -47,14 +62,11 @@ function Post({ post }) {
       setPostContent(post.content);
     }
 
-    setLikes(post.likes);
-
     const thisUser = context.users.find(
-      (x) => parseInt(x.id) === parseInt(post.user.userId)
+      (x) => parseInt(x.userId) === parseInt(post.userId)
     );
-    setAuthor(thisUser);
 
-    console.log(context.allPosts);
+    setAuthor(thisUser);
   }, [post, context, postId]);
 
   const handleDelete = () => {
@@ -80,7 +92,6 @@ function Post({ post }) {
   // find post author
   useEffect(() => {
     if (postId !== undefined && location.pathname.includes("/post")) {
-      console.log("post searched for by id: ", postId);
       var thisPost = context.posts.find(
         (x) => parseInt(x.postId) === parseInt(postId)
       );
@@ -109,8 +120,6 @@ function Post({ post }) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("comments here: ", data);
-        console.log(postIdEntry, " should only match ", postId);
         setComments(data); // Update posts state with fetched data
       })
       .catch((error) => {
@@ -124,6 +133,102 @@ function Post({ post }) {
 
   const toggleUpdateButton = () => {
     setUpdateMode(!updateMode);
+  };
+
+  // LIKING AND DISLIKING
+  const handleLikePost = async () => {
+    var newlike = post.likes + 1;
+
+    if (likesUpdate !== null && postId !== undefined) {
+      newlike = likesUpdate + 1;
+    }
+
+    const newLikesData = {
+      likes: parseInt(newlike),
+    };
+
+    try {
+      const response = await fetch(
+        `https://localhost:7234/posts/${post.postId}/likes?postId=${post.postId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newLikesData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to like post");
+      }
+
+      reloadPosts();
+
+      const updatedPost = await response.json();
+
+      const newPosts = context.allPosts.map((x) => {
+        if (x.postId === updatedPost.postId) {
+          return updatedPost;
+        } else {
+          return x;
+        }
+      });
+
+      context.setPosts([...newPosts]);
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
+
+    setLikes(newLikesData.likes);
+    setLikesUpdate(newLikesData.likes);
+  };
+
+  const handleDislikePost = async () => {
+    if (post.likes > 0) {
+      var newlike = post.likes - 1;
+
+      if (likesUpdate !== null && postId !== undefined) {
+        newlike = likesUpdate - 1;
+      }
+
+      const newLikesData = {
+        likes: parseInt(newlike),
+      };
+
+      try {
+        const response = await fetch(
+          `https://localhost:7234/posts/${post.postId}/likes?postId=${post.postId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newLikesData),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to dislike post");
+        }
+
+        const updatedPost = await response.json();
+
+        const newPosts = context.allPosts.map((x) => {
+          if (x.postId === updatedPost.postId) {
+            return updatedPost;
+          } else {
+            return x;
+          }
+        });
+
+        context.setPosts([...newPosts]);
+      } catch (error) {
+        console.error("Error disliking post:", error);
+      }
+      setLikes(newLikesData.likes);
+      setLikesUpdate(newLikesData.likes);
+    }
   };
 
   return (
@@ -171,7 +276,7 @@ function Post({ post }) {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLikePost(post, context, setLikes);
+                    handleLikePost(post);
                   }}
                 >
                   Like
@@ -179,7 +284,7 @@ function Post({ post }) {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    handleDislikePost(post, context, setLikes);
+                    handleDislikePost(post);
                   }}
                 >
                   Dislike
@@ -221,7 +326,7 @@ function Post({ post }) {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                handleLikePost(post, context, setLikes);
+                handleLikePost();
               }}
             >
               Like
