@@ -64,7 +64,7 @@ html {
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1rem; /* Add margin between the post form and posts */
-  width: calc(100% - 240px); /* Calculate the width to span from sidebar */
+  width: 1500px; /* Calculate the width to span from sidebar */
 }
 
 .post-card {
@@ -83,6 +83,7 @@ html {
   border-radius: 8px;
   margin-bottom: 1rem; /* Add margin between posts */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+  width: 1500px;
 }
 
 .post-title {
@@ -189,7 +190,7 @@ html {
   padding: 5px; /* Add padding inside each comment */
   margin-bottom: 10px; /* Add some margin between comments */
   margin-top: 20px; /* Add some margin between comments */
-  width: 700px;
+  width: 1300px;
   height: 80px;
 }
 
@@ -220,13 +221,13 @@ html {
 }
 
 .textarea-section {
-  width: 50%;
+  width: 1435px;
   display: flex;
 }
 
 textarea {
   flex: 1;
-  width: 90%;
+  width: 100%;
   height: 60px; /* Adjust height as needed */
   padding: 10px;
   margin-bottom: 20px;
