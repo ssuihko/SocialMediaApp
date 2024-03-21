@@ -8,6 +8,7 @@ import {
   handleLikeComment,
   handleDislikeComment,
 } from "../helperfunctions/CommentInterractions";
+import thumbsUpImage from "../../../img/thumbs_13653275.png";
 
 function Comment({ comment }) {
   const [update, setUpdate] = useState(false);
@@ -60,6 +61,23 @@ function Comment({ comment }) {
       return formData;
     }
   };
+  const handleDelete = () => {
+    fetch(
+      `https://localhost:7234/posts/${postContext.post.postId}*/comments/${comment.commentId}?commentId=${comment.commentId}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete comment");
+        }
+        postContext.reloadPosts();
+      })
+      .catch((error) => {
+        console.error("Error deleting comment:", error.message);
+      });
+  };
 
   return (
     <div>
@@ -96,28 +114,60 @@ function Comment({ comment }) {
           ) : (
             <div>
               <button
-                className="like-comment"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLikeComment(comment, postContext);
-                }}
-              >
-                Like
-              </button>
-              <button
                 className="dislike-comment"
                 onClick={(e) => {
                   e.preventDefault();
                   handleDislikeComment(comment, postContext);
                 }}
               >
-                Dislike
+                <img
+                  src={thumbsUpImage}
+                  alt="Thumbs Up"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+
+                    verticalAlign: "middle",
+                    transform: "rotate(180deg)",
+                  }}
+                />
               </button>
-              <p>
-                {comment.content} likes: {comment.likes}
-              </p>
+
+              <div className="likes">
+                <span
+                  style={{
+                    fontSize: "1.2em",
+                    verticalAlign: "top",
+                    position: "relative",
+                    top: "-1px",
+                  }}
+                >
+                  {comment.likes}
+                </span>
+              </div>
+              <button
+                className="like-comment"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLikeComment(comment, postContext);
+                }}
+              >
+                <img
+                  src={thumbsUpImage}
+                  alt="Thumbs Up"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    verticalAlign: "middle",
+                  }}
+                />
+              </button>
+              <p>{comment.content} </p>
             </div>
           )}
+          <button className="delete-button" onClick={handleDelete}>
+            Delete
+          </button>
           <button
             className="modify-btn"
             onClick={(e) => {

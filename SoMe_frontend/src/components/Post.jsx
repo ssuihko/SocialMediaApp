@@ -7,6 +7,7 @@ import { createContext } from "react";
 import { Link } from "react-router-dom";
 import PostFormUpdate from "./PostFormUpdate";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import thumbsUpImage from "../../../img/thumbs_13653275.png";
 
 const PostContext = createContext();
 
@@ -36,7 +37,14 @@ function Post({ post }) {
     }
 
     if (postId !== undefined) {
-      if (comments.length > 0) {
+      if (post.comments.length > 0 && comments.length > 0) {
+        console.log("here: ", comments.length);
+        console.log("here2: ", post.comments.length);
+        if (comments.length !== post.comments.length) {
+          console.log("should be fixed?");
+          console.log(post.comments);
+          setComments(post.comments);
+        }
         if (comments[0].commentId !== post.comments[0].commentId) {
           setComments([]);
         }
@@ -272,23 +280,61 @@ function Post({ post }) {
                   </div>
                 )}
                 <p>{content}</p>
-                <p>likes: {likes}</p>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleLikePost(post);
+                <div
+                  className="likesfield"
+                  style={{
+                    marginBottom: "15px",
                   }}
                 >
-                  Like
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleDislikePost(post);
-                  }}
-                >
-                  Dislike
-                </button>
+                  <button
+                    className="Like-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLikePost(post);
+                    }}
+                  >
+                    <img
+                      src={thumbsUpImage}
+                      alt="Thumbs Up"
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        marginBottom: "8px",
+                        verticalAlign: "middle",
+                      }}
+                    />
+                  </button>
+
+                  <span
+                    className="postLikes"
+                    style={{
+                      fontSize: "1.2em",
+                      marginTop: "35px",
+                    }}
+                  >
+                    {likes}
+                  </span>
+
+                  <button
+                    className="Dislike-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleDislikePost(post);
+                    }}
+                  >
+                    <img
+                      src={thumbsUpImage}
+                      alt="Thumbs Up"
+                      style={{
+                        width: "20px",
+                        height: "20px",
+
+                        verticalAlign: "middle",
+                        transform: "rotate(180deg)",
+                      }}
+                    />
+                  </button>
+                </div>
               </div>
             )}
 
@@ -322,23 +368,56 @@ function Post({ post }) {
               </div>
             )}
             <p>{content}</p>
-            <p>likes: {likes}</p>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleLikePost();
-              }}
-            >
-              Like
-            </button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleDislikePost(post, context, setLikes);
-              }}
-            >
-              Dislike
-            </button>
+            <div className="likesfield">
+              <button
+                className="Like-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLikePost();
+                }}
+              >
+                <img
+                  src={thumbsUpImage}
+                  alt="Thumbs Up"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    marginBottom: "8px",
+                    verticalAlign: "middle",
+                  }}
+                />
+              </button>
+
+              <span
+                className="postLikes"
+                style={{
+                  fontSize: "1.2em",
+                  marginTop: "35px",
+                }}
+              >
+                {likes}
+              </span>
+
+              <button
+                className="Dislike-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleDislikePost(post, context, setLikes);
+                }}
+              >
+                <img
+                  src={thumbsUpImage}
+                  alt="Thumbs Up"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+
+                    verticalAlign: "middle",
+                    transform: "rotate(180deg)",
+                  }}
+                />
+              </button>
+            </div>
           </div>
         )}
         <hr className="horizontal-line" />
