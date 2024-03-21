@@ -4,6 +4,11 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 import { PostContext } from "./Post";
 import { Link } from "react-router-dom";
+import {
+  handleUpdateComment,
+  handleLikeComment,
+  handleDislikeComment,
+} from "../helperfunctions/CommentInterractions";
 
 function Comment({ comment }) {
   const [update, setUpdate] = useState(false);
@@ -28,90 +33,6 @@ function Comment({ comment }) {
     setUser(thisUser);
   }, [context.users, comment.userId]);
 
-  const handleUpdateComment = async (formData) => {
-    const newCommentData = {
-      content: formData.content,
-    };
-
-    try {
-      const response = await fetch(
-        `https://localhost:7234/posts/${postContext.post.post_id}/comments/${comment.commentId}?commentId=${comment.commentId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newCommentData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to update comment");
-      }
-
-      postContext.reloadPosts();
-      setUpdate(false);
-    } catch (error) {
-      console.error("Error updating comment:", error);
-      return formData;
-    }
-  };
-
-  const handleLike = async () => {
-    const newLikesData = {
-      likes: parseInt(comment.likes + 1),
-    };
-
-    try {
-      const response = await fetch(
-        `https://localhost:7234/posts/{post_id}/comments/${comment.commentId}/likes?commentId=${comment.commentId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newLikesData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to like comment");
-      }
-
-      postContext.reloadPosts();
-    } catch (error) {
-      console.error("Error liking post:", error);
-    }
-  };
-
-  const handleDislike = async () => {
-    if (comment.likes > 0) {
-      const newLikesData = {
-        likes: comment.likes - 1,
-      };
-      try {
-        const response = await fetch(
-          `https://localhost:7234/posts/{post_id}/comments/${comment.commentId}/likes?commentId=${comment.commentId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newLikesData),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to dislike post");
-        }
-
-        postContext.reloadPosts();
-      } catch (error) {
-        console.error("Error disliking comment: ", error);
-      }
-    }
-  };
-
   return (
     <div>
       {user === undefined ? (
@@ -126,7 +47,7 @@ function Comment({ comment }) {
               className="update-comment-form"
               onSubmit={(e) => {
                 e.preventDefault();
-                handleUpdateComment(formData);
+                handleUpdateComment(formData, comment, postContext, setUpdate);
               }}
             >
               <div className="update-comment-field">
@@ -150,7 +71,7 @@ function Comment({ comment }) {
                 className="like-comment"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleLike();
+                  handleLikeComment(comment, postContext);
                 }}
               >
                 Like
@@ -159,7 +80,7 @@ function Comment({ comment }) {
                 className="dislike-comment"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleDislike();
+                  handleDislikeComment(comment, postContext);
                 }}
               >
                 Dislike

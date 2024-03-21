@@ -12,10 +12,10 @@ const API_URL = "https://localhost:7234/";
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [viewPost, setViewPost] = useState([]);
   const [viewPostFlag, setViewPostFlag] = useState(false);
-  const [posts, setPosts] = useState([]);
 
   const location = useLocation();
 
@@ -28,11 +28,11 @@ function App() {
   }, [location.pathname]);
 
   useEffect(() => {
+    console.log("posts fetched again...");
     fetch(API_URL + "posts")
       .then((response) => response.json())
       .then((data) => {
         setPosts(data);
-        console.log("here: ", data);
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
@@ -40,6 +40,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    console.log("users fetched again...");
     fetch(API_URL + "users")
       .then((response) => response.json())
       .then((data) => {
@@ -58,6 +59,7 @@ function App() {
     <AppContext.Provider
       value={{
         posts: viewPostFlag ? viewPost : posts,
+        allPosts: posts,
         viewPostFlag: viewPostFlag,
         setPosts: setPosts,
         loggedInUser: loggedInUser,
