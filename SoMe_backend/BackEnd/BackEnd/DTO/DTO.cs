@@ -82,6 +82,8 @@ namespace BackEnd.DTO
     class PostResponseDTO
     {
         public int postId { get; set; }
+
+        public int userId { get; set; }
         public string title { get; set; }
         public string content { get; set; }
         public int likes { get; set; }
@@ -90,6 +92,7 @@ namespace BackEnd.DTO
         public PostResponseDTO(Post post)
         {
             postId = post.postId;
+            userId = post.userId;
             title = post.title;
             content = post.content;
             likes = post.likes;
