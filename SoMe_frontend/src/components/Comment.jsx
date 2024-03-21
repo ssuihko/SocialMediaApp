@@ -5,7 +5,6 @@ import { AppContext } from "../App";
 import { PostContext } from "./Post";
 import { Link } from "react-router-dom";
 import {
-  handleUpdateComment,
   handleLikeComment,
   handleDislikeComment,
 } from "../helperfunctions/CommentInterractions";
@@ -33,6 +32,35 @@ function Comment({ comment }) {
     setUser(thisUser);
   }, [context.users, comment.userId]);
 
+  const handleUpdateComment = async () => {
+    const newCommentData = {
+      content: formData.content,
+    };
+
+    try {
+      const response = await fetch(
+        `https://localhost:7234/posts/${postContext.post.post_id}/comments/${comment.commentId}?commentId=${comment.commentId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newCommentData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update comment");
+      }
+
+      postContext.reloadPosts();
+      setUpdate(false);
+    } catch (error) {
+      console.error("Error updating comment:", error);
+      return formData;
+    }
+  };
+
   return (
     <div>
       {user === undefined ? (
@@ -47,7 +75,7 @@ function Comment({ comment }) {
               className="update-comment-form"
               onSubmit={(e) => {
                 e.preventDefault();
-                handleUpdateComment(formData, comment, postContext, setUpdate);
+                handleUpdateComment();
               }}
             >
               <div className="update-comment-field">
