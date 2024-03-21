@@ -394,11 +394,31 @@ textarea {
 
 .like-comment {
   float: right;
+  background-color: white; /* Red color for delete button */
+  color: white; /* Text color */
+  border: none; /* Remove border */
+  padding: 0.5rem 1rem; /* Add padding */
+  border-radius: 4px; /* Add border radius */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Add transition for smooth color change */
+  align-self: flex-end;
+  margin-left: -3px;
 }
 
 .dislike-comment {
   float: right;
+  background-color: white; /* Red color for delete button */
+  color: white; /* Text color */
+  border: none; /* Remove border */
+  padding: 0.5rem 1rem; /* Add padding */
+  border-radius: 4px; /* Add border radius */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Add transition for smooth color change */
+  align-self: flex-end;
+
+  margin-top: 4px;
 }
+
 .filter-form {
   margin-left: 10px;
 }
@@ -446,4 +466,34 @@ textarea {
 
 .post-form-update button[type="submit-post-update"]:hover {
   background-color: #66c1b3; /* New color on hover */
+}
+
+.likes {
+  float: right;
+  margin-top: 8px;
+}
+.Like-button {
+  background-color: white;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-end;
+}
+
+.Dislike-button {
+  background-color: white;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-end;
+}
+
+.likesfield {
+  margin-top: 40px;
 }
