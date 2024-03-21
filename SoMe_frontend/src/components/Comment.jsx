@@ -165,7 +165,7 @@ function Comment({ comment }) {
               <p>{comment.content} </p>
             </div>
           )}
-          <button className="delete-button" onClick={handleDelete}>
+          <button className="delete-comment-button" onClick={handleDelete}>
             Delete
           </button>
           <button
