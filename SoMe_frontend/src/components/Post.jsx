@@ -168,23 +168,61 @@ function Post({ post }) {
                   </div>
                 )}
                 <p>{content}</p>
-                <p>likes: {likes}</p>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleLikePost(post, context, setLikes);
+                <div
+                  className="likesfield"
+                  style={{
+                    marginBottom: "15px",
                   }}
                 >
-                  Like
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleDislikePost(post, context, setLikes);
-                  }}
-                >
-                  Dislike
-                </button>
+                  <button
+                    className="Like-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLikePost(post, context, setLikes);
+                    }}
+                  >
+                    <img
+                      src={thumbsUpImage}
+                      alt="Thumbs Up"
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        marginBottom: "8px",
+                        verticalAlign: "middle",
+                      }}
+                    />
+                  </button>
+
+                  <span
+                    className="postLikes"
+                    style={{
+                      fontSize: "1.2em",
+                      marginTop: "35px",
+                    }}
+                  >
+                    {likes}
+                  </span>
+
+                  <button
+                    className="Dislike-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleDislikePost(post, context, setLikes);
+                    }}
+                  >
+                    <img
+                      src={thumbsUpImage}
+                      alt="Thumbs Up"
+                      style={{
+                        width: "20px",
+                        height: "20px",
+
+                        verticalAlign: "middle",
+                        transform: "rotate(180deg)",
+                      }}
+                    />
+                  </button>
+                </div>
               </div>
             )}
 
