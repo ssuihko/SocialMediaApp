@@ -27,7 +27,7 @@ function CreateCommentForm() {
 
     try {
       // Make a POST request to the API endpoint to create the new post
-      const response = await fetch(
+      fetch(
         `https://localhost:7234/posts/${postContext.post.postId}/comments`,
         {
           method: "POST",
@@ -36,20 +36,23 @@ function CreateCommentForm() {
           },
           body: JSON.stringify(newCommentData),
         }
-      );
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to create comment");
+          }
+          context.reloadPosts();
+          // postContext.reloadComments(parseInt(postContext.post.postId));
+          const newComment = response.json();
+          //console.log(newComment);
+          //console.log(newCommentData);
+          postContext.setComments([...postContext.comments, newComment]);
+        })
+        .catch((error) => {
+          console.error("Error adding comment:", error.message);
+        });
 
-      if (!response.ok) {
-        throw new Error("Failed to create comment");
-      }
-
-      context.reloadPosts();
-      postContext.reloadComments(parseInt(postContext.post.postId));
-
-      const newComment = await response.json();
-
-      postContext.setComments([...postContext.comments, newComment]);
-
-      console.log(newComment);
+      // context.reloadPosts()
 
       setFormData({});
     } catch (error) {

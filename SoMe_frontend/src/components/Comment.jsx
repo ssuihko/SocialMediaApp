@@ -82,7 +82,7 @@ function Comment({ comment }) {
   return (
     <div>
       {user === undefined ? (
-        <p>loading...</p>
+        <p></p>
       ) : (
         <div className="comment">
           <Link to={`/profile/${user.userId}`} className="comment-author">
@@ -165,19 +165,26 @@ function Comment({ comment }) {
               <p>{comment.content} </p>
             </div>
           )}
-          <button className="delete-comment-button" onClick={handleDelete}>
-            Delete
-          </button>
-          <button
-            className="modify-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              setFormData(comment);
-              setUpdate(!update);
-            }}
-          >
-            Modify
-          </button>
+          <div className="comment-buttons">
+            {update ? (
+              <div></div>
+            ) : (
+              <button className="delete-comment-button" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
+
+            <button
+              className="modify-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                setFormData(comment);
+                setUpdate(!update);
+              }}
+            >
+              Modify
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -237,6 +237,7 @@ textarea {
 }
 .update-comment-field {
   margin-top: 30px;
+  position: relative;
 }
 
 .update-comment-btn {
