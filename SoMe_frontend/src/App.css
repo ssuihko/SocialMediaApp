@@ -309,7 +309,7 @@ textarea {
 }
 
 .delete-button {
-  background-color: red; /* Red color for delete button */
+  background-color: rgb(197, 8, 8); /* Red color for delete button */
   color: white; /* Text color */
   border: none; /* Remove border */
   padding: 0.5rem 1rem; /* Add padding */
