@@ -28,7 +28,10 @@ function Dashboard() {
         <div>
           <PostForm />
           <div className="filter-form">
-            <label htmlFor="filter" style={{ marginRight: "10px" }}>
+            <label
+              htmlFor="filter"
+              style={{ marginRight: "10px", width: "800px" }}
+            >
               Filter:
             </label>
             <input
