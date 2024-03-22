@@ -1,4 +1,4 @@
-const handleLikeComment = async (comment, postContext) => {
+const handleLikeComment = async (comment, context) => {
   const newLikesData = {
     likes: parseInt(comment.likes + 1),
   };
@@ -19,13 +19,13 @@ const handleLikeComment = async (comment, postContext) => {
       throw new Error("Failed to like comment");
     }
 
-    postContext.reloadPosts();
+    context.reloadPosts();
   } catch (error) {
     console.error("Error liking post:", error);
   }
 };
 
-const handleDislikeComment = async (comment, postContext) => {
+const handleDislikeComment = async (comment, context) => {
   if (comment.likes > 0) {
     const newLikesData = {
       likes: comment.likes - 1,
@@ -46,7 +46,7 @@ const handleDislikeComment = async (comment, postContext) => {
         throw new Error("Failed to dislike post");
       }
 
-      postContext.reloadPosts();
+      context.reloadPosts();
     } catch (error) {
       console.error("Error disliking comment: ", error);
     }

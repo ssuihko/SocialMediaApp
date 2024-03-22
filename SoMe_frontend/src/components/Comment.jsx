@@ -54,7 +54,7 @@ function Comment({ comment }) {
         throw new Error("Failed to update comment");
       }
 
-      postContext.reloadPosts();
+      context.reloadPosts();
       setUpdate(false);
     } catch (error) {
       console.error("Error updating comment:", error);
@@ -72,7 +72,7 @@ function Comment({ comment }) {
         if (!response.ok) {
           throw new Error("Failed to delete comment");
         }
-        postContext.reloadPosts();
+        context.reloadPosts();
       })
       .catch((error) => {
         console.error("Error deleting comment:", error.message);
@@ -82,7 +82,7 @@ function Comment({ comment }) {
   return (
     <div>
       {user === undefined ? (
-        <p>loading...</p>
+        <p></p>
       ) : (
         <div className="comment">
           <Link to={`/profile/${user.userId}`} className="comment-author">
@@ -117,7 +117,7 @@ function Comment({ comment }) {
                 className="dislike-comment"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleDislikeComment(comment, postContext);
+                  handleDislikeComment(comment, context);
                 }}
               >
                 <img
@@ -149,7 +149,7 @@ function Comment({ comment }) {
                 className="like-comment"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleLikeComment(comment, postContext);
+                  handleLikeComment(comment, context);
                 }}
               >
                 <img
@@ -165,19 +165,26 @@ function Comment({ comment }) {
               <p>{comment.content} </p>
             </div>
           )}
-          <button className="delete-comment-button" onClick={handleDelete}>
-            Delete
-          </button>
-          <button
-            className="modify-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              setFormData(comment);
-              setUpdate(!update);
-            }}
-          >
-            Modify
-          </button>
+          <div className="comment-buttons">
+            {update ? (
+              <div></div>
+            ) : (
+              <button className="delete-comment-button" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
+
+            <button
+              className="modify-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                setFormData(comment);
+                setUpdate(!update);
+              }}
+            >
+              Modify
+            </button>
+          </div>
         </div>
       )}
     </div>

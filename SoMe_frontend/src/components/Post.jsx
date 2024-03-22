@@ -32,19 +32,13 @@ function Post({ post }) {
   useEffect(() => {
     console.log("comments reset again...");
 
-    if (postId === undefined) {
-      setLikesUpdate(null);
-    }
-
+    // we are in post-view...
     if (postId !== undefined) {
       if (post.comments.length > 0 && comments.length > 0) {
-        console.log("here: ", comments.length);
-        console.log("here2: ", post.comments.length);
         if (comments.length !== post.comments.length) {
-          console.log("should be fixed?");
-          console.log(post.comments);
           setComments(post.comments);
         }
+
         if (comments[0].commentId !== post.comments[0].commentId) {
           setComments([]);
         }
@@ -59,6 +53,8 @@ function Post({ post }) {
         }
       }
     } else {
+      // in dashboard
+      setLikesUpdate(null);
       setComments(post.comments);
       setLikes(post.likes);
     }
@@ -77,6 +73,25 @@ function Post({ post }) {
     setAuthor(thisUser);
   }, [post, context, postId]);
 
+  // managing mismatching between posts and comments
+  useEffect(() => {
+    if (post.comments.length > 0 && comments.length > 0) {
+      if (comments[0].postId !== post.comments[0].postId) {
+        console.log(comments[0].postId, post.comments[0].postId);
+        setComments(post.comments);
+      }
+    }
+  }, [post, comments]);
+
+  /** 
+  console.log("POST MODS + LIKE");
+  console.log(
+    post.content,
+    content,
+    post.postId,
+    context.allPosts.find((x) => parseInt(x.postId) === parseInt(post.postId))
+  );**/
+
   const handleDelete = () => {
     fetch(`https://localhost:7234/posts/${post.postId}?postId=${post.postId}`, {
       method: "DELETE",
@@ -94,6 +109,8 @@ function Post({ post }) {
         console.error("Error deleting post:", error.message);
       });
 
+    context.reloadPosts();
+
     navigate("/");
   };
 
@@ -110,17 +127,6 @@ function Post({ post }) {
       setAuthor(updateAuthor);
     }
   }, [context.users, post.user, postId, context.posts, location]);
-
-  const reloadPosts = () => {
-    fetch("https://localhost:7234/posts")
-      .then((response) => response.json())
-      .then((data) => {
-        context.setPosts(data); // Update posts state with fetched data
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
-  };
 
   const reloadComments = (postIdEntry) => {
     fetch(
@@ -171,7 +177,7 @@ function Post({ post }) {
         throw new Error("Failed to like post");
       }
 
-      reloadPosts();
+      // context.reloadPosts();
 
       const updatedPost = await response.json();
 
@@ -193,7 +199,10 @@ function Post({ post }) {
   };
 
   const handleDislikePost = async () => {
-    if (post.likes > 0) {
+    console.log("in dislike: ", post.likes);
+    if (post.likes > -1) {
+      console.log("in handle dislike");
+
       var newlike = post.likes - 1;
 
       if (likesUpdate !== null && postId !== undefined) {
@@ -249,7 +258,6 @@ function Post({ post }) {
           setPostContent: setPostContent,
           setUpdateMode: setUpdateMode,
           setComments: setComments,
-          reloadPosts: reloadPosts,
           reloadComments: reloadComments,
         }}
       >
@@ -423,11 +431,17 @@ function Post({ post }) {
         <hr className="horizontal-line" />
         <div>
           <CreateCommentForm postId={post.postId} />
-          {comments
-            .sort((a, b) => parseInt(b.commentId) - parseInt(a.commentId))
-            .map((comment, index) => (
-              <Comment comment={comment} key={index} />
-            ))}
+          {comments.length > 0 ? (
+            <div>
+              {comments
+                .sort((a, b) => parseInt(b.commentId) - parseInt(a.commentId))
+                .map((comment, index) => (
+                  <Comment comment={comment} key={index} />
+                ))}
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </PostContext.Provider>
     </div>
