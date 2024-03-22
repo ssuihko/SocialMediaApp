@@ -55,6 +55,7 @@ function PostForm() {
         id="title"
         placeholder="Title"
         value={title}
+        autoComplete="off"
         onChange={handleTitleChange}
       />
       <label htmlFor="content">Content:</label>
