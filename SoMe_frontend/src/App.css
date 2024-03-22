@@ -89,6 +89,8 @@ html {
 .post-title {
   color: rgb(82, 179, 158); /* Set the color of the post title */
   text-decoration: none; /* Underline the post title */
+  font-size: 30pt;
+  position: relative;
 }
 
 .post:last-child {
@@ -96,8 +98,11 @@ html {
 }
 .post-author {
   color: grey;
-  font-size: 11pt;
+  font-size: 15pt;
   text-decoration: underline;
+  position: relative;
+  font-weight: bold;
+  top: -20px; /* Adjust the top position to move it closer to the title */
 }
 
 .post-form label {
@@ -126,6 +131,11 @@ html {
   border-radius: 4px; /* Add border radius */
   cursor: pointer; /* Change cursor to pointer on hover */
   transition: background-color 0.3s ease; /* Add transition for smooth */
+}
+
+.post p {
+  font-size: 20pt;
+  margin-top: 5px;
 }
 
 .post-form button[type="submit-post-update"] {
@@ -209,6 +219,7 @@ html {
 
 .comment p {
   margin-top: 30px; /* Add top margin to the comment content */
+  font-size: 15pt;
 }
 .create-comment {
   width: 100%;
@@ -298,7 +309,7 @@ textarea {
 }
 
 .delete-button {
-  background-color: rgb(82, 179, 158); /* Red color for delete button */
+  background-color: red; /* Red color for delete button */
   color: white; /* Text color */
   border: none; /* Remove border */
   padding: 0.5rem 1rem; /* Add padding */
@@ -423,7 +434,13 @@ textarea {
 .filter-form {
   margin-left: 10px;
 }
-
+.filter-form input {
+  width: 1455px; /* Use 100% width to span the entire width of its container */
+  padding: 0.5rem; /* Adjust padding as needed */
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 .post-form-update label {
   display: block;
   margin-bottom: 0.5rem; /* Add spacing between form labels */
@@ -500,7 +517,7 @@ textarea {
 }
 
 .delete-comment-button {
-  background-color: rgb(82, 179, 158); /* Red color for delete button */
+  background-color: rgb(197, 8, 8); /* Red color for delete button */
   color: white; /* Text color */
   border: none; /* Remove border */
   padding: 0.5rem 1rem; /* Add padding */
@@ -510,6 +527,6 @@ textarea {
   align-self: flex-end;
   float: right;
   width: 84px;
-  margin-right: -187px;
-  margin-top: -74px;
+  margin-right: -135px;
+  margin-top: -85px;
 }
